@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - UrbanBasket</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f8f8f8;
+            /* Light background for Apple-like feel */
+            color: #333;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+        }
+
+        /* Custom animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* Specific styles for the green color */
+        .text-primary-green {
+            color: #4CAF50;
+        }
+
+        .bg-primary-green {
+            background-color: #4CAF50;
+        }
+
+        .border-primary-green {
+            border-color: #4CAF50;
+        }
+
+        /* Apple-like button styling */
+        .apple-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .apple-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Navbar specific styling for Apple-like blur */
+        .navbar-blur {
+            background-color: rgba(255, 255, 255, 0.7);
+            /* Slightly more opaque */
+            backdrop-filter: blur(8px);
+            /* Stronger blur effect */
+            -webkit-backdrop-filter: blur(8px);
+            /* For Safari support */
+        }
+
+        /* Signup Form Styling */
+        .signup-container {
+            min-height: calc(100vh - 80px);
+            /* Adjusted to account for only navbar height */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background-color: #E0F2F1;
+            /* Light background for the section */
+        }
+
+        .signup-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            /* More pronounced shadow */
+            width: 100%;
+            max-width: 500px;
+            /* Slightly wider for more fields */
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .signup-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .signup-card h2 {
+            font-size: 2.5rem;
+            /* text-4xl */
+            font-weight: 800;
+            /* font-extrabold */
+            color: #1a202c;
+            /* gray-900 */
+            margin-bottom: 1.5rem;
+        }
+
+        .signup-card label {
+            display: block;
+            text-align: left;
+            font-weight: 600;
+            color: #4a5568;
+            /* gray-700 */
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .signup-card input[type="text"],
+        .signup-card input[type="email"],
+        .signup-card input[type="password"] {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid #e2e8f0;
+            /* Light gray border */
+            border-radius: 0.75rem;
+            /* Rounded corners for inputs */
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+            /* Subtle inner shadow */
+        }
+
+        .signup-card input[type="text"]:focus,
+        .signup-card input[type="email"]:focus,
+        .signup-card input[type="password"]:focus {
+            outline: none;
+            border-color: #4CAF50;
+            /* Green border on focus */
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+            /* Green ring on focus */
+        }
+
+        .signup-card .checkbox-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Center checkbox horizontally */
+            margin-bottom: 1.5rem;
+        }
+
+        .signup-card input[type="checkbox"] {
+            margin-right: 0.75rem;
+            width: 1.25rem;
+            /* Larger checkbox */
+            height: 1.25rem;
+            /* Larger checkbox */
+            accent-color: #4CAF50;
+            /* Green accent for checkbox */
+        }
+
+        .signup-card button[type="submit"] {
+            width: 100%;
+            padding: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            font-weight: 700;
+            border-radius: 9999px;
+            /* Fully rounded */
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .signup-card button[type="submit"]:hover {
+            background-color: #388E3C;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .signup-card .login-link {
+            font-size: 0.9rem;
+            color: #4CAF50;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .signup-card .login-link:hover {
+            color: #388E3C;
+            text-decoration: underline;
+        }
+
+        /* Error Log Styling */
+        .error-log {
+            background-color: #ffebee;
+            /* Light red background */
+            color: #d32f2f;
+            /* Dark red text */
+            border: 1px solid #ef9a9a;
+            /* Red border */
+            border-radius: 0.75rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: left;
+            font-size: 0.9rem;
+            display: none;
+            /* Hidden by default */
+        }
+
+        .error-log.show {
+            display: block;
+            /* Show when 'show' class is present */
+        }
+
+
+        /* Scroll to top button */
+        #scrollToTopBtn {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Fixed position */
+            bottom: 30px;
+            /* Place at the bottom */
+            right: 30px;
+            /* Place at the right */
+            z-index: 99;
+            /* High z-index to be on top of other elements */
+            background-color: #4CAF50;
+            /* Green background */
+            color: white;
+            /* White icon */
+            border: none;
+            /* No border */
+            border-radius: 50%;
+            /* Circular shape */
+            width: 50px;
+            /* Width of the button */
+            height: 50px;
+            /* Height of the button */
+            font-size: 24px;
+            /* Icon size */
+            cursor: pointer;
+            /* Pointer cursor on hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            /* Subtle shadow */
+            transition: background-color 0.3s, transform 0.3s, opacity 0.3s;
+            /* Smooth transitions */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #388E3C;
+            /* Darker green on hover */
+            transform: translateY(-3px);
+            /* Slight lift effect */
+        }
+
+        #scrollToTopBtn i {
+            transform: rotate(-90deg);
+            /* Rotate the leaf icon to point upwards */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .signup-card {
+                padding: 1.5rem;
+            }
+
+            .signup-card h2 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            .signup-card input[type="text"],
+            .signup-card input[type="email"],
+            .signup-card input[type="password"] {
+                padding: 0.7rem 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .signup-card button[type="submit"] {
+                padding: 0.8rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Overall Page Wrapper -->
+    <div class="mx-auto max-w-7xl bg-white shadow-lg overflow-hidden">
+
+        <!-- Navbar -->
+        <nav class="bg-white p-5 shadow-sm flex items-center navbar-blur">
+            <!-- Logo -->
+            <div class="text-3xl font-bold text-primary-green tracking-wide flex-shrink-0">UrbanBasket</div>
+
+            <!-- Main Navigation Links - Centered -->
+            <ul class="flex-grow flex justify-center items-center space-x-4 text-base list-none">
+                <li><a href="index.html"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Home</a></li>
+                <li><a href="products.html"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Products</a>
+                </li>
+                <li><a href="about.html"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">About</a>
+                </li>
+                <li><a href="blog.html"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Blog</a></li>
+                <li><a href="contact.html"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Empty div to remove login/signup buttons -->
+            <div class="flex items-center space-x-4 flex-shrink-0">
+            </div>
+        </nav>
+
+        <!-- Signup Section -->
+        <section class="signup-container animate-fadeIn">
+            <div class="signup-card">
+                <h2>Create Your Account</h2>
+                <form method="post" action="signup">
+                    {% csrf_token %}
+                    <!-- Error Log -->
+                    {% for message in messages %}
+                    <div id="error-log" class="error-log">
+                        <p>{{message}}</p>
+                    </div>
+                    {% endfor %}
+
+                    <div class="mb-4">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Choose a username">
+                    </div>
+                    <div class="mb-4">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="Enter your email address">
+                    </div>
+                    <div class="mb-4">
+                        <label for="firstname">First Name</label>
+                        <input type="text" id="firstname" name="firstname" placeholder="Enter your first name">
+                    </div>
+                    <div class="mb-4">
+                        <label for="lastame">Last Name</label>
+                        <input type="text" id="lastname" name="lastname" placeholder="Enter your Last name">
+                    </div>
+                    <div class="mb-4">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Create a password">
+                    </div>
+                    <div class="mb-6">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword"
+                            placeholder="Confirm your password">
+                    </div>
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="newsletter" name="newsletter">
+                        <label for="newsletter" class="mb-0">Subscribe to our Newsletter</label>
+                    </div>
+                    <button type="submit" class="apple-button">Sign Up</button>
+                    <div class="mt-6 text-center">
+                        <p class="text-gray-600">Already have an account? <a href="login" class="login-link">Login</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Scroll to Top Button -->
+        <button id="scrollToTopBtn" title="Go to top">
+            <i class="fas fa-leaf"></i>
+        </button>
+
+    </div> <!-- End of overall page wrapper -->
+
+    <script>
+        // Get the scroll to top button
+        let scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        // Get the error log element
+        let errorLog = document.getElementById("error-log");
+
+        // Function to update and show/hide the error log
+        function updateErrorLog(messages) {
+            errorLog.innerHTML = ''; // Clear previous messages
+            if (messages && messages.length > 0) {
+                messages.forEach(msg => {
+                    let p = document.createElement('p');
+                    p.textContent = msg;
+                    errorLog.appendChild(p);
+                });
+                errorLog.classList.add('show'); // Show the error log
+            } else {
+                errorLog.classList.remove('show'); // Hide the error log
+            }
+        }
+
+        // Example of how to use it (you can remove this for your implementation)
+        // To show errors:
+        // updateErrorLog(["Username is required.", "Password must be at least 8 characters."]);
+        // To hide errors:
+        // updateErrorLog([]);
+
+        // Initially hide the error log if it has no content (or clear its content)
+        // For demonstration, it starts with content, so we'll remove it here if it's empty.
+        // In a real app, you'd call updateErrorLog([]) on page load or when errors are cleared.
+        if (errorLog.textContent.trim() === '') {
+            errorLog.classList.remove('show');
+        } else {
+            errorLog.classList.add('show'); // Ensure it's shown if it has initial content
+        }
+
+
+        // When the user scrolls down 300px from the top of the document, show the button
+        window.onscroll = function () {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollToTopBtn.style.display = "flex"; // Use flex to center icon
+            } else {
+                scrollToTopBtn.style.display = "none";
+            }
+        };
+
+        // When the user clicks on the button, scroll to the top of the document
+        scrollToTopBtn.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scroll
+            });
+        });
+    </script>
+
+</body>
+
+</html>

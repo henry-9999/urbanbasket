@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - UrbanBasket</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f8f8f8;
+            /* Light background for Apple-like feel */
+            color: #333;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+        }
+
+        /* Custom animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .animate-slideInLeft {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        /* Specific styles for the green color */
+        .text-primary-green {
+            color: #4CAF50;
+        }
+
+        .bg-primary-green {
+            background-color: #4CAF50;
+        }
+
+        .border-primary-green {
+            border-color: #4CAF50;
+        }
+
+        /* Apple-like button styling */
+        .apple-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .apple-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Navbar specific styling for Apple-like blur */
+        .navbar-blur {
+            background-color: rgba(255, 255, 255, 0.7);
+            /* Slightly more opaque */
+            backdrop-filter: blur(8px);
+            /* Stronger blur effect */
+            -webkit-backdrop-filter: blur(8px);
+            /* For Safari support */
+        }
+
+        /* Hero section specific to About Us */
+        .about-hero {
+            background-color: #E0F2F1;
+            /* Light background */
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        /* Card styling for sections */
+        .section-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Scroll to top button */
+        #scrollToTopBtn {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Fixed position */
+            bottom: 30px;
+            /* Place at the bottom */
+            right: 30px;
+            /* Place at the right */
+            z-index: 99;
+            /* High z-index to be on top of other elements */
+            background-color: #4CAF50;
+            /* Green background */
+            color: white;
+            /* White icon */
+            border: none;
+            /* No border */
+            border-radius: 50%;
+            /* Circular shape */
+            width: 50px;
+            /* Width of the button */
+            height: 50px;
+            /* Height of the button */
+            font-size: 24px;
+            /* Icon size */
+            cursor: pointer;
+            /* Pointer cursor on hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            /* Subtle shadow */
+            transition: background-color 0.3s, transform 0.3s, opacity 0.3s;
+            /* Smooth transitions */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #388E3C;
+            /* Darker green on hover */
+            transform: translateY(-3px);
+            /* Slight lift effect */
+        }
+
+        #scrollToTopBtn i {
+            transform: rotate(-90deg);
+            /* Rotate the leaf icon to point upwards */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .section-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Overall Page Wrapper -->
+    <div class="mx-auto max-w-7xl bg-white shadow-lg overflow-hidden">
+
+        <!-- Navbar -->
+        <nav class="bg-white p-5 shadow-sm flex items-center navbar-blur">
+            <!-- Logo -->
+            <div class="text-3xl font-bold text-primary-green tracking-wide flex-shrink-0">UrbanBasket</div>
+
+            <!-- Main Navigation Links - Centered -->
+            <ul class="flex-grow flex justify-center items-center space-x-4 text-base list-none">
+                <li><a href="/"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Home</a></li>
+                <li><a href="product"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Products</a>
+                </li>
+                <li><a href="aboutus" class="text-primary-green transition duration-300 font-medium">About</a></li>
+                <li><a href="#"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Blog</a></li>
+                <li><a href="contactus"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Profile Picture & Login/Signup Buttons - Right Aligned -->
+            <div class="flex items-center space-x-4 flex-shrink-0">
+                <!-- Profile Picture Link -->
+                {% if user.is_authenticated %}
+                <a href="#profile"
+                    class="flex items-center space-x-2 text-gray-700 hover:text-primary-green transition duration-300 font-medium">
+                    <img src="https://placehold.co/32x32/4CAF50/FFFFFF?text={{user.first_name}}" alt="Profile"
+                        class="w-8 h-8 rounded-full object-cover border-2 border-primary-green">
+                    <span>Hello {{user.first_name}}</span>
+                </a>
+                {% else %}
+                <a href="login"
+                    class="px-3 py-1.5 rounded-md font-semibold bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 text-sm">Login</a>
+                <a href="signup"
+                    class="px-3 py-1.5 rounded-md font-semibold bg-primary-green text-white hover:bg-green-700 transition duration-300 text-sm">Sign
+                    Up</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <!-- About Us Hero Section -->
+        <header class="about-hero animate-fadeIn">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-4 animate-slideInLeft">
+                Our <span class="text-primary-green">Story</span>
+            </h1>
+            <p class="text-xl text-gray-700 mb-8 animate-fadeIn" style="animation-delay: 0.2s;">
+                Connecting you to the freshest produce, straight from the farm.
+            </p>
+        </header>
+
+        <!-- About Content Section -->
+        <section class="py-16 px-4">
+            <div class="container mx-auto space-y-12">
+
+                <!-- Our Mission Section -->
+                <div class="section-card animate-fadeIn" style="animation-delay: 0.4s;">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Our Mission</h2>
+                    <p class="text-lg text-gray-700 leading-relaxed text-center md:text-left">
+                        At UrbanBasket, our mission is to revolutionize how city dwellers access fresh, organic produce
+                        while empowering local farmers. We believe everyone deserves to eat healthy, chemical-free food,
+                        and farmers deserve fair compensation for their hard work. By creating a direct link from farm
+                        to table, we eliminate middlemen, ensuring unparalleled freshness for you and better profits for
+                        our farmers.
+                    </p>
+                </div>
+
+                <!-- Our Values Section -->
+                <div class="section-card animate-fadeIn" style="animation-delay: 0.6s;">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Our Values</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center">
+                        <div class="flex flex-col items-center">
+                            <span class="text-primary-green text-5xl mb-3">🌱</span>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Freshness & Quality</h3>
+                            <p class="text-gray-700">We guarantee the freshest, highest-quality organic produce,
+                                delivered within hours of harvest.</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-primary-green text-5xl mb-3">🤝</span>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Farmer Empowerment</h3>
+                            <p class="text-gray-700">We support local farmers by providing direct market access and fair
+                                prices.</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-primary-green text-5xl mb-3">🌍</span>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Sustainability</h3>
+                            <p class="text-gray-700">Committed to eco-friendly practices from farm to your doorstep.</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-primary-green text-5xl mb-3">💚</span>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Community Health</h3>
+                            <p class="text-gray-700">Promoting healthy eating habits and access to nutritious food for
+                                everyone.</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-primary-green text-5xl mb-3">📦</span>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Convenience</h3>
+                            <p class="text-gray-700">Making healthy eating easy with flexible delivery options and
+                                curated boxes.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- How It Works Section -->
+                <div class="section-card animate-fadeIn" style="animation-delay: 0.8s;">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">How We Work</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                        <div class="flex flex-col items-center">
+                            <span class="text-primary-green text-6xl mb-4">1️⃣</span>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Source Locally</h3>
+                            <p class="text-gray-700">We partner directly with trusted organic farms in your region.</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-primary-green text-6xl mb-4">2️⃣</span>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Harvest & Pack</h3>
+                            <p class="text-gray-700">Produce is harvested fresh and carefully packed for delivery.</p>
+                        </div>
+                        <div class="flex flex-col items-center">
+                            <span class="text-primary-green text-6xl mb-4">3️⃣</span>
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Deliver to You</h3>
+                            <p class="text-gray-700">Enjoy farm-fresh goodness delivered straight to your doorstep.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="text-center mt-12 animate-fadeIn" style="animation-delay: 1s;">
+                    <p class="text-xl text-gray-700 mb-6">Ready to experience the UrbanBasket difference?</p>
+                    <a href="#"
+                        class="inline-block bg-primary-green text-white text-lg font-semibold py-4 px-10 rounded-full apple-button hover:bg-green-700 transition duration-300">
+                        Shop Now
+                    </a>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-gray-900 text-white py-8 rounded-b-3xl px-4 animate-fadeIn">
+            <div class="container mx-auto text-center">
+                <div class="mb-4">
+                    <span class="text-3xl font-bold text-primary-green tracking-wide">UrbanBasket</span>
+                </div>
+                <div class="text-gray-400 mb-6">
+                    <p class="mb-1">📍 123 Farm-to-Table Lane, Organic City, ST 98765</p>
+                    <p class="mb-1">📞 +234 800 123 4567</p>
+                    <p>✉ info@urbanbasket.com</p>
+                </div>
+                <div class="flex justify-center space-x-6 text-2xl mb-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="Instagram"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="WhatsApp"><i
+                            class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="Twitter"><i
+                            class="fab fa-twitter"></i></a>
+                </div>
+                <div class="flex justify-center space-x-4 mt-4 text-sm">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">About</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Blog</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">FAQ</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>
+                </div>
+                <p class="text-gray-500 text-sm mt-6">&copy; 2025 UrbanBasket. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <!-- Scroll to Top Button -->
+        <button id="scrollToTopBtn" title="Go to top">
+            <i class="fas fa-leaf"></i>
+        </button>
+
+    </div> <!-- End of overall page wrapper -->
+
+    <script>
+        // Get the button
+        let mybutton = document.getElementById("scrollToTopBtn");
+
+        // When the user scrolls down 300px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                mybutton.style.display = "flex"; // Use flex to center icon
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        mybutton.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scroll
+            });
+        });
+    </script>
+
+</body>
+
+</html>

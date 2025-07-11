@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - UrbanBasket</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f8f8f8;
+            /* Light background for Apple-like feel */
+            color: #333;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+        }
+
+        /* Custom animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .animate-slideInLeft {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        /* Specific styles for the green color */
+        .text-primary-green {
+            color: #4CAF50;
+        }
+
+        .bg-primary-green {
+            background-color: #4CAF50;
+        }
+
+        .border-primary-green {
+            border-color: #4CAF50;
+        }
+
+        /* Apple-like button styling */
+        .apple-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .apple-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Navbar specific styling for Apple-like blur */
+        .navbar-blur {
+            background-color: rgba(255, 255, 255, 0.7);
+            /* Slightly more opaque */
+            backdrop-filter: blur(8px);
+            /* Stronger blur effect */
+            -webkit-backdrop-filter: blur(8px);
+            /* For Safari support */
+        }
+
+        /* Hero section specific to Contact Us */
+        .contact-hero {
+            background-color: #E0F2F1;
+            /* Light background */
+            padding: 6rem 2rem;
+            text-align: center;
+        }
+
+        /* Form styling */
+        .contact-form-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-form-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e2e8f0;
+            /* Tailwind gray-300 */
+            border-radius: 0.75rem;
+            /* Rounded corners */
+            font-size: 1rem;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            /* Primary green on focus */
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+            /* Subtle green ring */
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Info card styling */
+        .info-card {
+            background-color: #F0FDF4;
+            /* Very light green */
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Scroll to top button */
+        #scrollToTopBtn {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Fixed position */
+            bottom: 30px;
+            /* Place at the bottom */
+            right: 30px;
+            /* Place at the right */
+            z-index: 99;
+            /* High z-index to be on top of other elements */
+            background-color: #4CAF50;
+            /* Green background */
+            color: white;
+            /* White icon */
+            border: none;
+            /* No border */
+            border-radius: 50%;
+            /* Circular shape */
+            width: 50px;
+            /* Width of the button */
+            height: 50px;
+            /* Height of the button */
+            font-size: 24px;
+            /* Icon size */
+            cursor: pointer;
+            /* Pointer cursor on hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            /* Subtle shadow */
+            transition: background-color 0.3s, transform 0.3s, opacity 0.3s;
+            /* Smooth transitions */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #388E3C;
+            /* Darker green on hover */
+            transform: translateY(-3px);
+            /* Slight lift effect */
+        }
+
+        #scrollToTopBtn i {
+            transform: rotate(-90deg);
+            /* Rotate the leaf icon to point upwards */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+
+            .contact-form-card,
+            .info-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Overall Page Wrapper -->
+    <div class="mx-auto max-w-7xl bg-white shadow-lg overflow-hidden">
+
+        <!-- Navbar -->
+        <nav class="bg-white p-5 shadow-sm flex items-center navbar-blur">
+            <!-- Logo -->
+            <div class="text-3xl font-bold text-primary-green tracking-wide flex-shrink-0">UrbanBasket</div>
+
+            <!-- Main Navigation Links - Centered -->
+            <ul class="flex-grow flex justify-center items-center space-x-4 text-base list-none">
+                <li><a href="/"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Home</a></li>
+                <li><a href="product"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Products</a>
+                </li>
+                <li><a href="aboutus"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">About</a>
+                </li>
+                <li><a href="blog"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Blog</a></li>
+                <li><a href="contactus" class="text-primary-green transition duration-300 font-medium">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Profile Picture & Login/Signup Buttons - Right Aligned -->
+            <div class="flex items-center space-x-4 flex-shrink-0">
+                <!-- Profile Picture Link -->
+                {% if user.is_authenticated %}
+                <a href="#profile"
+                    class="flex items-center space-x-2 text-gray-700 hover:text-primary-green transition duration-300 font-medium">
+                    <img src="https://placehold.co/32x32/4CAF50/FFFFFF?text={{user.first_name}}" alt="Profile"
+                        class="w-8 h-8 rounded-full object-cover border-2 border-primary-green">
+                    <span>Hello {{user.first_name}}</span>
+                </a>
+                {% else %}
+                <a href="login"
+                    class="px-3 py-1.5 rounded-md font-semibold bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 text-sm">Login</a>
+                <a href="signup"
+                    class="px-3 py-1.5 rounded-md font-semibold bg-primary-green text-white hover:bg-green-700 transition duration-300 text-sm">Sign
+                    Up</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <!-- Contact Us Hero Section -->
+        <header class="contact-hero animate-fadeIn">
+            <h1 class="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight mb-4 animate-slideInLeft">
+                Get in <span class="text-primary-green">Touch</span>
+            </h1>
+            <p class="text-xl text-gray-700 mb-8 animate-fadeIn" style="animation-delay: 0.2s;">
+                We'd love to hear from you! Reach out to us for any inquiries.
+            </p>
+        </header>
+
+        <!-- Contact Content Section -->
+        <section class="py-16 px-4">
+            <div class="container mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+
+                <!-- Contact Form -->
+                <div class="contact-form-card animate-fadeIn" style="animation-delay: 0.4s;">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Send Us a Message</h2>
+                    <form>
+                        <div class="mb-6">
+                            <label for="name" class="block text-gray-700 text-lg font-medium mb-2">Your Name</label>
+                            <input type="text" id="name" name="name" class="form-input" placeholder="John Doe" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="email" class="block text-gray-700 text-lg font-medium mb-2">Your Email</label>
+                            <input type="email" id="email" name="email" class="form-input"
+                                placeholder="john.doe@example.com" required>
+                        </div>
+                        <div class="mb-6">
+                            <label for="message" class="block text-gray-700 text-lg font-medium mb-2">Your
+                                Message</label>
+                            <textarea id="message" name="message" class="form-input form-textarea"
+                                placeholder="Type your message here..." required></textarea>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit"
+                                class="bg-primary-green text-white text-lg font-semibold py-3 px-8 rounded-full apple-button hover:bg-green-700 transition duration-300">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Contact Information & Map -->
+                <div class="space-y-8">
+                    <!-- Contact Info Card -->
+                    <div class="info-card animate-fadeIn" style="animation-delay: 0.6s;">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Contact Information</h2>
+                        <div class="space-y-4 text-lg text-gray-700">
+                            <p class="flex items-center justify-center lg:justify-start"><i
+                                    class="fas fa-map-marker-alt text-primary-green mr-3 text-xl"></i> 123 Farm-to-Table
+                                Lane, Organic City, ST 98765</p>
+                            <p class="flex items-center justify-center lg:justify-start"><i
+                                    class="fas fa-phone-alt text-primary-green mr-3 text-xl"></i> +234 800 123 4567</p>
+                            <p class="flex items-center justify-center lg:justify-start"><i
+                                    class="fas fa-envelope text-primary-green mr-3 text-xl"></i> info@urbanbasket.com
+                            </p>
+                        </div>
+                        <div class="flex justify-center space-x-6 text-2xl mt-8">
+                            <a href="#" class="text-gray-600 hover:text-primary-green transition duration-300"
+                                aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-primary-green transition duration-300"
+                                aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#" class="text-gray-600 hover:text-primary-green transition duration-300"
+                                aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Map Embed -->
+                    <div class="info-card animate-fadeIn" style="animation-delay: 0.8s;">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Find Us on the Map</h2>
+                        <div class="w-full h-64 rounded-lg overflow-hidden">
+                            <iframe
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d5110.4041901131095!2d-122.9118207226755!3d48.479347068881935!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x548f803d84a93b25%3A0x1c67dd8973f455b3!2sSunnyfield%20Farm!5e0!3m2!1sen!2sng!4v1751819822487!5m2!1sen!2sng"
+                                width="100%" height="256px" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-gray-900 text-white py-8 rounded-b-3xl px-4 animate-fadeIn">
+            <div class="container mx-auto text-center">
+                <div class="mb-4">
+                    <span class="text-3xl font-bold text-primary-green tracking-wide">UrbanBasket</span>
+                </div>
+                <div class="text-gray-400 mb-6">
+                    <p class="mb-1">📍 123 Farm-to-Table Lane, Organic City, ST 98765</p>
+                    <p class="mb-1">📞 +234 800 123 4567</p>
+                    <p>✉ info@urbanbasket.com</p>
+                </div>
+                <div class="flex justify-center space-x-6 text-2xl mb-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="Instagram"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="WhatsApp"><i
+                            class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="Twitter"><i
+                            class="fab fa-twitter"></i></a>
+                </div>
+                <div class="flex justify-center space-x-4 mt-4 text-sm">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">About</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Blog</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">FAQ</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>
+                </div>
+                <p class="text-gray-500 text-sm mt-6">&copy; 2025 UrbanBasket. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <!-- Scroll to Top Button -->
+        <button id="scrollToTopBtn" title="Go to top">
+            <i class="fas fa-leaf"></i>
+        </button>
+
+    </div> <!-- End of overall page wrapper -->
+
+    <script>
+        // Get the button
+        let mybutton = document.getElementById("scrollToTopBtn");
+
+        // When the user scrolls down 300px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                mybutton.style.display = "flex"; // Use flex to center icon
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        mybutton.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scroll
+            });
+        });
+    </script>
+
+</body>
+
+</html>

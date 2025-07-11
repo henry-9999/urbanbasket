@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - UrbanBasket</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f8f8f8;
+            /* Light background for Apple-like feel */
+            color: #333;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+        }
+
+        /* Custom animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .animate-slideInLeft {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        .animate-pulse-hover:hover {
+            animation: pulse 0.7s infinite alternate;
+        }
+
+        /* Specific styles for the green color */
+        .text-primary-green {
+            color: #4CAF50;
+        }
+
+        .bg-primary-green {
+            background-color: #4CAF50;
+        }
+
+        .border-primary-green {
+            border-color: #4CAF50;
+        }
+
+        /* Apple-like button styling */
+        .apple-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .apple-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Navbar specific styling for Apple-like blur */
+        .navbar-blur {
+            background-color: rgba(255, 255, 255, 0.7);
+            /* Slightly more opaque */
+            backdrop-filter: blur(8px);
+            /* Stronger blur effect */
+            -webkit-backdrop-filter: blur(8px);
+            /* For Safari support */
+        }
+
+        /* Hero section - now a static banner and feature cards */
+        .products-hero-static {
+            background-color: #E0F2F1;
+            /* Light background */
+            padding: 2rem 0;
+            /* Adjusted padding */
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero-main-banner {
+            position: relative;
+            width: 100%;
+            height: 350px;
+            /* Fixed height for the main banner */
+            background-size: cover;
+            background-position: center;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: left;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            /* Space below the main banner */
+        }
+
+        .hero-main-banner-content {
+            padding: 2rem 4rem;
+            max-width: 700px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-main-banner h1 {
+            font-size: 3.5rem;
+            /* text-5xl */
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            /* font-extrabold */
+            color: #ffffff;
+        }
+
+        .hero-main-banner p {
+            font-size: 1.25rem;
+            /* text-xl */
+            margin-bottom: 2rem;
+            color: #f0f0f0;
+        }
+
+        .hero-main-banner .shop-now-button {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: 600;
+            padding: 1rem 2.5rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero-main-banner .shop-now-button:hover {
+            background-color: #388E3C;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .feature-card img {
+            width: 100px;
+            /* Smaller images for feature cards */
+            height: 100px;
+            object-fit: cover;
+            border-radius: 0.75rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.1rem;
+            /* Smaller title for feature cards */
+            font-weight: 600;
+            color: #1a202c;
+        }
+
+
+        /* Product card styling */
+        .product-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            /* Refined Apple-like shadow */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            /* Softer, more diffused initial shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            /* For discount badge */
+            overflow: hidden;
+            /* Ensure rounded corners clip content */
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            /* More pronounced but still clean shadow on hover */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            /* Fixed height for consistency */
+            object-fit: cover;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .product-card h3 {
+            font-size: 1.25rem;
+            /* text-xl */
+            font-weight: 600;
+            /* font-semibold */
+            color: #1a202c;
+            /* gray-900 */
+            margin-bottom: 0.5rem;
+            /* Reduced margin for tighter look */
+        }
+
+        .product-card p.text-gray-600 {
+            /* Description text */
+            font-size: 0.95rem;
+            /* Slightly smaller for description */
+            line-height: 1.4;
+            margin-bottom: 1rem;
+            /* Space before price */
+            min-height: 40px;
+            /* Ensure consistent height for descriptions */
+        }
+
+        .product-card p.text-lg.font-bold {
+            /* Price text */
+            font-size: 1.25rem;
+            /* text-lg */
+            color: #4CAF50;
+            /* primary-green */
+            margin-bottom: 1rem;
+            /* Space before buttons */
+        }
+
+        .product-card .add-to-box-button,
+        .product-card .view-details-button {
+            padding: 0.7rem 1.2rem;
+            /* Slightly adjusted padding for buttons */
+            font-size: 0.9rem;
+            /* Slightly smaller font for buttons */
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            /* Ensure all properties transition */
+            width: 100%;
+        }
+
+        .product-card .add-to-box-button {
+            background-color: #4CAF50;
+            color: #ffffff;
+        }
+
+        .product-card .add-to-box-button:hover {
+            background-color: #388E3C;
+            transform: translateY(-2px);
+            /* Subtle lift on hover */
+        }
+
+        .product-card .view-details-button {
+            background-color: #ffffff;
+            /* White background */
+            color: #4CAF50;
+            /* Green text */
+            border: 1px solid #4CAF50;
+            /* Green border */
+            margin-top: 0.5rem;
+        }
+
+        .product-card .view-details-button:hover {
+            background-color: #4CAF50;
+            color: white;
+            transform: translateY(-2px);
+            /* Subtle lift on hover */
+        }
+
+        .product-card .discount-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: #FF5722;
+            /* Orange for discount */
+            color: white;
+            font-weight: bold;
+            padding: 0.3rem 0.6rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            z-index: 10;
+        }
+
+        .product-card .category-badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: rgba(76, 175, 80, 0.8);
+            /* Semi-transparent green */
+            color: white;
+            font-weight: 500;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.75rem;
+            z-index: 10;
+        }
+
+        /* Styles for the overflowing Latest Products section */
+        .overflow-products-container {
+            overflow-x: auto;
+            /* Enable horizontal scrolling */
+            white-space: nowrap;
+            /* Prevent items from wrapping */
+            padding-bottom: 1rem;
+            /* Add some padding for scrollbar space if it appears */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+            scrollbar-width: none;
+            /* Firefox */
+        }
+
+        /* Hide scrollbar for WebKit browsers (Chrome, Safari) */
+        .overflow-products-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .overflow-products-wrapper {
+            display: flex;
+            gap: 1.5rem;
+            /* Space between cards */
+            padding: 0 2rem;
+            /* Padding at the ends for visual balance */
+        }
+
+        .overflow-products-wrapper .product-card {
+            flex-shrink: 0;
+            /* Prevent cards from shrinking */
+            width: 280px;
+            /* Fixed width for consistent card size in overflow */
+        }
+
+
+        /* Filter buttons */
+        .filter-button {
+            padding: 0.6rem 1.5rem;
+            border-radius: 9999px;
+            /* Fully rounded */
+            font-weight: 500;
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            border: 1px solid #e2e8f0;
+            /* Light gray border */
+            color: #333;
+            /* Default text color */
+        }
+
+        .filter-button.active {
+            background-color: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .filter-button:not(.active):hover {
+            background-color: #f0f0f0;
+            color: #4CAF50;
+            border-color: #4CAF50;
+        }
+
+        /* Newsletter specific styles */
+        .newsletter-input {
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Semi-transparent white */
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            /* Lighter placeholder text */
+        }
+
+        .newsletter-input:focus {
+            border-color: white;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .newsletter-button {
+            background-color: #ffffff;
+            /* White background */
+            color: #4CAF50;
+            /* Primary green text */
+            border: 1px solid #ffffff;
+            /* White border */
+        }
+
+        .newsletter-button:hover {
+            background-color: #f0f0f0;
+            /* Slightly off-white on hover */
+            color: #388E3C;
+            /* Darker green text on hover */
+            transform: translateY(-2px);
+            /* Subtle lift effect */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+
+        /* Scroll to top button */
+        #scrollToTopBtn {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Fixed position */
+            bottom: 30px;
+            /* Place at the bottom */
+            right: 30px;
+            /* Place at the right */
+            z-index: 99;
+            /* High z-index to be on top of other elements */
+            background-color: #4CAF50;
+            /* Green background */
+            color: white;
+            /* White icon */
+            border: none;
+            /* No border */
+            border-radius: 50%;
+            /* Circular shape */
+            width: 50px;
+            /* Width of the button */
+            height: 50px;
+            /* Height of the button */
+            font-size: 24px;
+            /* Icon size */
+            cursor: pointer;
+            /* Pointer cursor on hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            /* Subtle shadow */
+            transition: background-color 0.3s, transform 0.3s, opacity 0.3s;
+            /* Smooth transitions */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #388E3C;
+            /* Darker green on hover */
+            transform: translateY(-3px);
+            /* Slight lift effect */
+        }
+
+        #scrollToTopBtn i {
+            transform: rotate(-90deg);
+            /* Rotate the leaf icon to point upwards */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .hero-main-banner h1 {
+                font-size: 3rem;
+            }
+
+            .hero-main-banner p {
+                font-size: 1.1rem;
+            }
+
+            .hero-main-banner-content {
+                padding: 1.5rem 2rem;
+            }
+
+            .feature-card img {
+                width: 80px;
+                height: 80px;
+            }
+
+            .feature-card h3 {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slider-item {
+                /* This class is no longer used for Latest Products, but keeping for safety */
+                flex: 0 0 100%;
+                /* 1 item per row on small screens */
+                max-width: 100%;
+            }
+
+            .slider-arrow {
+                /* This class is no longer used for Latest Products, but keeping for safety */
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+
+            .slider-arrow.left {
+                /* This class is no longer used for Latest Products, but keeping for safety */
+                left: 0.25rem;
+            }
+
+            .slider-arrow.right {
+                /* This class is no longer used for Latest Products, but keeping for safety */
+                right: 0.25rem;
+            }
+
+            .product-card {
+                padding: 1rem;
+            }
+
+            .product-card img {
+                height: 150px;
+            }
+
+            .filter-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero-main-banner {
+                height: 250px;
+            }
+
+            .hero-main-banner h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-main-banner p {
+                font-size: 0.9rem;
+                margin-bottom: 1rem;
+            }
+
+            .hero-main-banner-content {
+                padding: 1rem;
+            }
+
+            .hero-main-banner .shop-now-button {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            .feature-card {
+                padding: 1rem;
+            }
+
+            .feature-card img {
+                width: 60px;
+                height: 60px;
+            }
+
+            .feature-card h3 {
+                font-size: 0.9rem;
+            }
+
+            .overflow-products-wrapper .product-card {
+                width: 250px;
+                /* Adjust width for smaller screens */
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Overall Page Wrapper -->
+    <div class="mx-auto max-w-7xl bg-white shadow-lg overflow-hidden">
+
+        <!-- Navbar -->
+        <nav class="bg-white p-5 shadow-sm flex items-center navbar-blur">
+            <!-- Logo -->
+            <div class="text-3xl font-bold text-primary-green tracking-wide flex-shrink-0">UrbanBasket</div>
+
+            <!-- Main Navigation Links - Centered -->
+            <ul class="flex-grow flex justify-center items-center space-x-4 text-base list-none">
+                <li><a href="/"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Home</a></li>
+                <li><a href="product" class="text-primary-green transition duration-300 font-medium">Products</a>
+                </li>
+                <li><a href="aboutus"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">About</a>
+                </li>
+                <li><a href="blog"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Blog</a></li>
+                <li><a href="contactus"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Profile Picture & Login/Signup Buttons - Right Aligned -->
+            <div class="flex items-center space-x-4 flex-shrink-0">
+                <!-- Profile Picture Link -->
+                {% if user.is_authenticated %}
+                <a href="#profile"
+                    class="flex items-center space-x-2 text-gray-700 hover:text-primary-green transition duration-300 font-medium">
+                    <img src="https://placehold.co/32x32/4CAF50/FFFFFF?text={{user.first_name}}" alt="Profile"
+                        class="w-8 h-8 rounded-full object-cover border-2 border-primary-green">
+                    <span>Hello {{user.first_name}}</span>
+                </a>
+                {% else %}
+                <a href="login"
+                    class="px-3 py-1.5 rounded-md font-semibold bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 text-sm">Login</a>
+                <a href="signup"
+                    class="px-3 py-1.5 rounded-md font-semibold bg-primary-green text-white hover:bg-green-700 transition duration-300 text-sm">Sign
+                    Up</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <!-- Products Hero Section - Static Banner and Feature Cards -->
+        <header class="products-hero-static animate-fadeIn">
+            <div class="container mx-auto">
+                <!-- Main Promotional Banner -->
+                <div class="hero-main-banner animate-fadeIn"
+                    style="background-image: url('https://placehold.co/1200x350/4CAF50/FFFFFF?text=Fresh+Produce+Deals'); animation-delay: 0.3s;">
+                    <div class="hero-main-banner-content">
+                        <h1>Unlock Fresh Deals!</h1>
+                        <p>Save big on your favorite organic fruits and vegetables this week.</p>
+                        <a href="#" class="shop-now-button">Shop Deals Now</a>
+                    </div>
+                </div>
+
+                <!-- Feature/Category Cards -->
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 animate-fadeIn"
+                    style="animation-delay: 0.5s;">
+                    <div class="feature-card">
+                        <img src="https://placehold.co/100x100/F0FDF4/4CAF50?text=Seasonal" alt="Seasonal Produce">
+                        <h3>Seasonal Picks</h3>
+                    </div>
+                    <div class="feature-card">
+                        <img src="https://placehold.co/100x100/F0FDF4/4CAF50?text=Vegetables" alt="Fresh Vegetables">
+                        <h3>Vegetables</h3>
+                    </div>
+                    <div class="feature-card">
+                        <img src="https://placehold.co/100x100/F0FDF4/4CAF50?text=Fruits" alt="Delicious Fruits">
+                        <h3>Fruits</h3>
+                    </div>
+                    <div class="feature-card">
+                        <img src="https://placehold.co/100x100/F0FDF4/4CAF50?text=Herbs" alt="Aromatic Herbs">
+                        <h3>Herbs</h3>
+                    </div>
+                    <div class="feature-card">
+                        <img src="https://placehold.co/100x100/F0FDF4/4CAF50?text=Tubers" alt="Healthy Tubers">
+                        <h3>Tubers</h3>
+                    </div>
+                    <div class="feature-card">
+                        <img src="https://placehold.co/100x100/F0FDF4/4CAF50?text=Organic" alt="Organic Certified">
+                        <h3>Organic Certified</h3>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Featured / Latest Products Overflowing Section -->
+        <section class="py-16 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12 animate-fadeIn">
+                    🌟 Latest Produce on the Shelf
+                </h2>
+                <div class="overflow-products-container">
+                    <div id="latest-products-overflow" class="overflow-products-wrapper">
+                        <!-- Product 1 -->
+                        <div class="product-card">
+                            <span class="category-badge">Vegetable</span>
+                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Organic+Tomatoes"
+                                alt="Organic Tomatoes">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Organic Tomatoes</h3>
+                            <p class="text-gray-600 mb-3">Freshly picked, juicy, and ripe.</p>
+                            <p class="text-lg font-bold text-primary-green mb-4">₦1,200 / kg</p>
+                            <button class="add-to-box-button">Add to Box</button>
+                            <button class="view-details-button">View Details</button>
+                        </div>
+                        <!-- Product 2 -->
+                        <div class="product-card">
+                            <span class="discount-badge">-20% OFF</span>
+                            <span class="category-badge">Vegetable</span>
+                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Cucumber+Deal"
+                                alt="Cucumber Deal">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Crisp Cucumbers</h3>
+                            <p class="text-gray-600 mb-3">Perfect for salads and snacks.</p>
+                            <p class="text-lg font-bold text-primary-green mb-4">₦700 <s class="text-gray-400">₦875</s>
+                                / kg</p>
+                            <button class="add-to-box-button">Add to Box</button>
+                            <button class="view-details-button">View Details</button>
+                        </div>
+                        <!-- Product 3 -->
+                        <div class="product-card">
+                            <span class="category-badge">Fruit</span>
+                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Ripe+Mangoes" alt="Ripe Mangoes">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Sweet Mangoes</h3>
+                            <p class="text-gray-600 mb-3">Now in season, bursting with flavor.</p>
+                            <p class="text-lg font-bold text-primary-green mb-4">₦1,800 / kg</p>
+                            <button class="add-to-box-button">Add to Box</button>
+                            <button class="view-details-button">View Details</button>
+                        </div>
+                        <!-- Product 4 -->
+                        <div class="product-card">
+                            <span class="category-badge">Fruit</span>
+                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Fresh+Oranges"
+                                alt="Fresh Oranges">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Fresh Oranges</h3>
+                            <p class="text-gray-600 mb-3">Citrusy and full of Vitamin C.</p>
+                            <p class="text-lg font-bold text-primary-green mb-4">₦950 / kg</p>
+                            <button class="add-to-box-button">Add to Box</button>
+                            <button class="view-details-button">View Details</button>
+                        </div>
+                        <!-- Product 5 -->
+                        <div class="product-card">
+                            <span class="category-badge">Herb</span>
+                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Organic+Basil"
+                                alt="Organic Basil">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Organic Basil</h3>
+                            <p class="text-gray-600 mb-3">Aromatic and perfect for cooking.</p>
+                            <p class="text-lg font-bold text-primary-green mb-4">₦400 / bunch</p>
+                            <button class="add-to-box-button">Add to Box</button>
+                            <button class="view-details-button">View Details</button>
+                        </div>
+                        <!-- Product 6 -->
+                        <div class="product-card">
+                            <span class="category-badge">Vegetable</span>
+                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Lettuce" alt="Lettuce">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Crisp Lettuce</h3>
+                            <p class="text-gray-600 mb-3">Ideal for fresh salads and sandwiches.</p>
+                            <p class="text-lg font-bold text-primary-green mb-4">₦600 / head</p>
+                            <button class="add-to-box-button">Add to Box</button>
+                            <button class="view-details-button">View Details</button>
+                        </div>
+                        <!-- Product 7 -->
+                        <div class="product-card">
+                            <span class="category-badge">Fruit</span>
+                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Watermelon" alt="Watermelon">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Sweet Watermelon</h3>
+                            <p class="text-gray-600 mb-3">Refreshing and hydrating.</p>
+                            <p class="text-lg font-bold text-primary-green mb-4">₦3,500 / piece</p>
+                            <button class="add-to-box-button">Add to Box</button>
+                            <button class="view-details-button">View Details</button>
+                        </div>
+                        <!-- Product 8 -->
+                        <div class="product-card">
+                            <span class="category-badge">Tuber</span>
+                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Puna+Yam" alt="Puna Yam">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Puna Yam</h3>
+                            <p class="text-gray-600 mb-3">Locally sourced, perfect for pounding.</p>
+                            <p class="text-lg font-bold text-primary-green mb-4">₦2,500 / kg</p>
+                            <button class="add-to-box-button">Add to Box</button>
+                            <button class="view-details-button">View Details</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter/Search Section -->
+        <section class="py-12 px-4 bg-gray-50">
+            <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+                <div class="w-full md:w-1/2">
+                    <div class="relative">
+                        <input type="text" id="product-search" placeholder="Search for products..."
+                            class="form-input pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:ring-primary-green focus:border-primary-green transition duration-300">
+                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+                <div class="w-full md:w-1/2 flex justify-center md:justify-end space-x-3 flex-wrap gap-2">
+                    <button class="filter-button active" data-category="all">All</button>
+                    <button class="filter-button" data-category="vegetable">Vegetables</button>
+                    <button class="filter-button" data-category="fruit">Fruits</button>
+                    <button class="filter-button" data-category="herb">Herbs</button>
+                    <button class="filter-button" data-category="tuber">Tubers</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Explore Our Full Range Grid -->
+        <section class="py-16 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12 animate-fadeIn">
+                    🥕 Explore Our Full Range
+                </h2>
+                <div id="all-products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <!-- General Product 1 -->
+                    <div class="product-card" data-category="vegetable">
+                        <span class="category-badge">Vegetable</span>
+                        <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Spinach" alt="Spinach">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Fresh Spinach</h3>
+                        <p class="text-gray-600 mb-3">Locally grown, vibrant green leaves.</p>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦800 / bunch</p>
+                        <button class="add-to-box-button">Add to Box</button>
+                        <button class="view-details-button">View Details</button>
+                    </div>
+                    <!-- General Product 2 -->
+                    <div class="product-card" data-category="fruit">
+                        <span class="category-badge">Fruit</span>
+                        <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Avocado" alt="Avocado">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Ripe Avocados</h3>
+                        <p class="text-gray-600 mb-3">Creamy and rich, perfect for salads.</p>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦1,500 / piece</p>
+                        <button class="add-to-box-button">Add to Box</button>
+                        <button class="view-details-button">View Details</button>
+                    </div>
+                    <!-- General Product 3 -->
+                    <div class="product-card" data-category="tuber">
+                        <span class="category-badge">Tuber</span>
+                        <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Sweet+Potato" alt="Sweet Potato">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Sweet Potatoes</h3>
+                        <p class="text-gray-600 mb-3">Naturally sweet and nutritious.</p>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦1,000 / kg</p>
+                        <button class="add-to-box-button">Add to Box</button>
+                        <button class="view-details-button">View Details</button>
+                    </div>
+                    <!-- General Product 4 -->
+                    <div class="product-card" data-category="herb">
+                        <span class="category-badge">Herb</span>
+                        <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Parsley" alt="Parsley">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Fresh Parsley</h3>
+                        <p class="text-gray-600 mb-3">A versatile herb for all your dishes.</p>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦300 / bunch</p>
+                        <button class="add-to-box-button">Add to Box</button>
+                        <button class="view-details-button">View Details</button>
+                    </div>
+                    <!-- General Product 5 -->
+                    <div class="product-card" data-category="vegetable">
+                        <span class="category-badge">Vegetable</span>
+                        <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Bell+Peppers" alt="Bell Peppers">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Bell Peppers</h3>
+                        <p class="text-gray-600 mb-3">Colorful and crunchy, perfect for stir-fries.</p>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦900 / piece</p>
+                        <button class="add-to-box-button">Add to Box</button>
+                        <button class="view-details-button">View Details</button>
+                    </div>
+                    <!-- General Product 6 -->
+                    <div class="product-card" data-category="fruit">
+                        <span class="category-badge">Fruit</span>
+                        <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Pineapple" alt="Pineapple">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Juicy Pineapple</h3>
+                        <p class="text-gray-600 mb-3">Sweet and tangy, a tropical delight.</p>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦2,000 / piece</p>
+                        <button class="add-to-box-button">Add to Box</button>
+                        <button class="view-details-button">View Details</button>
+                    </div>
+                    <!-- General Product 7 -->
+                    <div class="product-card" data-category="tuber">
+                        <span class="category-badge">Tuber</span>
+                        <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Ginger" alt="Ginger">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Fresh Ginger</h3>
+                        <p class="text-gray-600 mb-3">Spicy and aromatic, great for health.</p>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦700 / 250g</p>
+                        <button class="add-to-box-button">Add to Box</button>
+                        <button class="view-details-button">View Details</button>
+                    </div>
+                    <!-- General Product 8 -->
+                    <div class="product-card" data-category="vegetable">
+                        <span class="category-badge">Vegetable</span>
+                        <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Cabbage" alt="Cabbage">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Green Cabbage</h3>
+                        <p class="text-gray-600 mb-3">Crisp and versatile for many recipes.</p>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦850 / head</p>
+                        <button class="add-to-box-button">Add to Box</button>
+                        <button class="view-details-button">View Details</button>
+                    </div>
+                    <!-- General Product 9 -->
+                    <div class="product-card" data-category="fruit">
+                        <span class="category-badge">Fruit</span>
+                        <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Grapes" alt="Grapes">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Sweet Grapes</h3>
+                        <p class="text-gray-600 mb-3">Seedless and refreshing.</p>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦2,900 / punnet</p>
+                        <button class="add-to-box-button">Add to Box</button>
+                        <button class="view-details-button">View Details</button>
+                    </div>
+                    <!-- General Product 10 -->
+                    <div class="product-card" data-category="herb">
+                        <span class="category-badge">Herb</span>
+                        <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Rosemary" alt="Rosemary">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Fresh Rosemary</h3>
+                        <p class="text-gray-600 mb-3">Fragrant and perfect for roasts.</p>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦450 / bunch</p>
+                        <button class="add-to-box-button">Add to Box</button>
+                        <button class="view-details-button">View Details</button>
+                    </div>
+                    <!-- General Product 11 -->
+                    <div class="product-card" data-category="vegetable">
+                        <span class="category-badge">Vegetable</span>
+                        <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Lettuce" alt="Lettuce">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Crisp Lettuce</h3>
+                        <p class="text-gray-600 mb-3">Ideal for fresh salads and sandwiches.</p>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦600 / head</p>
+                        <button class="add-to-box-button">Add to Box</button>
+                        <button class="view-details-button">View Details</button>
+                    </div>
+                    <!-- General Product 12 -->
+                    <div class="product-card" data-category="fruit">
+                        <span class="category-badge">Fruit</span>
+                        <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Watermelon" alt="Watermelon">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Sweet Watermelon</h3>
+                        <p class="text-gray-600 mb-3">Refreshing and hydrating.</p>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦3,500 / piece</p>
+                        <button class="add-to-box-button">Add to Box</button>
+                        <button class="view-details-button">View Details</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Add Product CTA -->
+        <section class="py-12 px-4 bg-primary-green text-center">
+            <div class="container mx-auto max-w-2xl">
+                <h2 class="text-3xl font-bold mb-4 text-white">
+                    Got a product suggestion or want to add new stock?
+                </h2>
+                <p class="text-lg text-gray-100 mb-8">
+                    We're always looking to expand our offerings and support more local farmers!
+                </p>
+                <a href="#"
+                    class="inline-block px-8 py-4 bg-white text-primary-green font-semibold rounded-full hover:bg-gray-100 transition duration-300 apple-button">
+                    <i class="fas fa-plus-circle mr-2"></i> Add Product
+                </a>
+            </div>
+        </section>
+
+        <!-- Newsletter Strip -->
+        <section class="py-16 px-4 bg-primary-green text-center">
+            <div class="container mx-auto max-w-2xl">
+                <h2 class="text-4xl font-bold mb-6 animate-fadeIn text-white">
+                    Join Our Newsletter
+                </h2>
+                <p class="text-lg mb-8 animate-fadeIn text-gray-100" style="animation-delay: 0.2s;">
+                    Get weekly recipes & discounts in your inbox.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fadeIn"
+                    style="animation-delay: 0.4s;">
+                    <input type="email" placeholder="Enter your email"
+                        class="newsletter-input flex-grow px-6 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-lg placeholder-white" />
+                    <button
+                        class="newsletter-button px-8 py-3 rounded-full font-semibold text-lg transition duration-300">Subscribe</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-gray-900 text-white py-8 rounded-b-3xl px-4 animate-fadeIn">
+            <div class="container mx-auto text-center">
+                <div class="mb-4">
+                    <span class="text-3xl font-bold text-primary-green tracking-wide">UrbanBasket</span>
+                </div>
+                <div class="text-gray-400 mb-6">
+                    <p class="mb-1">📍 123 Farm-to-Table Lane, Organic City, ST 98765</p>
+                    <p class="mb-1">📞 +234 800 123 4567</p>
+                    <p>✉ info@urbanbasket.com</p>
+                </div>
+                <div class="flex justify-center space-x-6 text-2xl mb-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="Instagram"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="WhatsApp"><i
+                            class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="Twitter"><i
+                            class="fab fa-twitter"></i></a>
+                </div>
+                <div class="flex justify-center space-x-4 mt-4 text-sm">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">About</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Blog</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">FAQ</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>
+                </div>
+                <p class="text-gray-500 text-sm mt-6">&copy; 2025 UrbanBasket. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <!-- Scroll to Top Button -->
+        <button id="scrollToTopBtn" title="Go to top">
+            <i class="fas fa-leaf"></i>
+        </button>
+
+    </div> <!-- End of overall page wrapper -->
+
+    <script>
+        // Get the scroll to top button
+        let scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        // When the user scrolls down 300px from the top of the document, show the button
+        window.onscroll = function () {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollToTopBtn.style.display = "flex"; // Use flex to center icon
+            } else {
+                scrollToTopBtn.style.display = "none";
+            }
+        };
+
+        // When the user clicks on the button, scroll to the top of the document
+        scrollToTopBtn.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scroll
+            });
+        });
+    </script>
+
+</body>
+
+</html>

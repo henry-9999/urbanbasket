@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - UrbanBasket</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f8f8f8;
+            /* Light background for Apple-like feel */
+            color: #333;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+        }
+
+        /* Custom animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .animate-slideInLeft {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        .animate-pulse-hover:hover {
+            animation: pulse 0.7s infinite alternate;
+        }
+
+        /* Specific styles for the green color */
+        .text-primary-green {
+            color: #4CAF50;
+        }
+
+        .bg-primary-green {
+            background-color: #4CAF50;
+        }
+
+        .border-primary-green {
+            border-color: #4CAF50;
+        }
+
+        /* Apple-like button styling */
+        .apple-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .apple-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Navbar specific styling for Apple-like blur */
+        .navbar-blur {
+            background-color: rgba(255, 255, 255, 0.7);
+            /* Slightly more opaque */
+            backdrop-filter: blur(8px);
+            /* Stronger blur effect */
+            -webkit-backdrop-filter: blur(8px);
+            /* For Safari support */
+        }
+
+        /* Hero section for Blog */
+        .blog-hero {
+            background-color: #E0F2F1;
+            /* Light background */
+            padding: 3rem 2rem;
+            /* Further reduced padding */
+            text-align: center;
+        }
+
+        .blog-hero h1 {
+            font-size: 3rem;
+            /* Further reduced font size */
+            font-weight: 800;
+            /* font-extrabold */
+            color: #1a202c;
+            /* gray-900 */
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+            /* Further reduced margin */
+        }
+
+        .blog-hero p {
+            font-size: 1.1rem;
+            /* Further reduced font size */
+            color: #4a5568;
+            /* gray-700 */
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Blog card styling - similar to product cards for consistency */
+        .blog-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            /* Softer, more diffused initial shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            /* Align text left for blog posts */
+            overflow: hidden;
+            /* Ensure rounded corners clip content */
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            /* Fixed height for consistency */
+            object-fit: cover;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .blog-card .blog-date {
+            font-size: 0.875rem;
+            /* text-sm */
+            color: #718096;
+            /* gray-500 */
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-card h3 {
+            font-size: 1.5rem;
+            /* text-xl */
+            font-weight: 700;
+            /* font-bold */
+            color: #1a202c;
+            /* gray-900 */
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .blog-card p.blog-context {
+            font-size: 1rem;
+            /* text-base */
+            color: #4a5568;
+            /* gray-700 */
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .blog-card .read-more-button {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            background-color: #4CAF50;
+            color: #ffffff;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            align-self: flex-start;
+            /* Align button to the left */
+        }
+
+        .blog-card .read-more-button:hover {
+            background-color: #388E3C;
+            transform: translateY(-2px);
+        }
+
+        /* Single column blog post styling */
+        .single-column-blog-post {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            /* Align content to the start */
+            text-align: left;
+            margin-bottom: 2rem;
+            /* Space between posts */
+        }
+
+        .single-column-blog-post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .single-column-blog-post img {
+            width: 100%;
+            max-height: 300px;
+            /* Larger image for single column */
+            object-fit: cover;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .single-column-blog-post .blog-date {
+            font-size: 0.95rem;
+            color: #718096;
+            margin-bottom: 0.75rem;
+        }
+
+        .single-column-blog-post h3 {
+            font-size: 2rem;
+            /* text-3xl */
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .single-column-blog-post p.blog-context {
+            font-size: 1.1rem;
+            /* text-lg */
+            color: #4a5568;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .single-column-blog-post .read-more-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: #4CAF50;
+            color: #ffffff;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .single-column-blog-post .read-more-button:hover {
+            background-color: #388E3C;
+            transform: translateY(-2px);
+        }
+
+
+        /* Newsletter specific styles */
+        .newsletter-input {
+            background-color: rgba(255, 255, 255, 0.2);
+            /* Semi-transparent white */
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+
+        .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+            /* Lighter placeholder text */
+        }
+
+        .newsletter-input:focus {
+            border-color: white;
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.5);
+        }
+
+        .newsletter-button {
+            background-color: #ffffff;
+            /* White background */
+            color: #4CAF50;
+            /* Primary green text */
+            border: 1px solid #ffffff;
+            /* White border */
+        }
+
+        .newsletter-button:hover {
+            background-color: #f0f0f0;
+            /* Slightly off-white on hover */
+            color: #388E3C;
+            /* Darker green text on hover */
+            transform: translateY(-2px);
+            /* Subtle lift effect */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+
+        /* Scroll to top button */
+        #scrollToTopBtn {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Fixed position */
+            bottom: 30px;
+            /* Place at the bottom */
+            right: 30px;
+            /* Place at the right */
+            z-index: 99;
+            /* High z-index to be on top of other elements */
+            background-color: #4CAF50;
+            /* Green background */
+            color: white;
+            /* White icon */
+            border: none;
+            /* No border */
+            border-radius: 50%;
+            /* Circular shape */
+            width: 50px;
+            /* Width of the button */
+            height: 50px;
+            /* Height of the button */
+            font-size: 24px;
+            /* Icon size */
+            cursor: pointer;
+            /* Pointer cursor on hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            /* Subtle shadow */
+            transition: background-color 0.3s, transform 0.3s, opacity 0.3s;
+            /* Smooth transitions */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #388E3C;
+            /* Darker green on hover */
+            transform: translateY(-3px);
+            /* Slight lift effect */
+        }
+
+        #scrollToTopBtn i {
+            transform: rotate(-90deg);
+            /* Rotate the leaf icon to point upwards */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .blog-hero h1 {
+                font-size: 2.5rem;
+                /* Further reduced for smaller screens */
+            }
+
+            .blog-hero p {
+                font-size: 1rem;
+                /* Further reduced for smaller screens */
+            }
+
+            .blog-card img {
+                height: 180px;
+            }
+
+            .blog-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .blog-card p.blog-context {
+                font-size: 0.95rem;
+            }
+
+            .single-column-blog-post h3 {
+                font-size: 1.8rem;
+            }
+
+            .single-column-blog-post p.blog-context {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .blog-hero {
+                padding: 2.5rem 1rem;
+                /* Even smaller padding for mobile */
+            }
+
+            .blog-hero h1 {
+                font-size: 2rem;
+                /* Mobile font size */
+            }
+
+            .blog-hero p {
+                font-size: 0.85rem;
+                /* Mobile font size */
+            }
+
+            .blog-card {
+                padding: 1rem;
+            }
+
+            .blog-card img {
+                height: 150px;
+            }
+
+            .blog-card h3 {
+                font-size: 1.1rem;
+            }
+
+            .blog-card p.blog-context {
+                font-size: 0.875rem;
+            }
+
+            .single-column-blog-post {
+                padding: 1rem;
+            }
+
+            .single-column-blog-post h3 {
+                font-size: 1.5rem;
+            }
+
+            .single-column-blog-post p.blog-context {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Overall Page Wrapper -->
+    <div class="mx-auto max-w-7xl bg-white shadow-lg overflow-hidden">
+
+        <!-- Navbar -->
+        <nav class="bg-white p-5 shadow-sm flex items-center navbar-blur">
+            <!-- Logo -->
+            <div class="text-3xl font-bold text-primary-green tracking-wide flex-shrink-0">UrbanBasket</div>
+
+            <!-- Main Navigation Links - Centered -->
+            <ul class="flex-grow flex justify-center items-center space-x-4 text-base list-none">
+                <li><a href="/"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Home</a></li>
+                <li><a href="product"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Products</a>
+                </li>
+                <li><a href="aboutus"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">About</a>
+                </li>
+                <li><a href="blog" class="text-primary-green transition duration-300 font-medium">Blog</a></li>
+                <li><a href="contactus"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Profile Picture & Login/Signup Buttons - Right Aligned -->
+            <div class="flex items-center space-x-4 flex-shrink-0">
+                <!-- Profile Picture Link -->
+                {% if user.is_authenticated %}
+                <a href="#profile"
+                    class="flex items-center space-x-2 text-gray-700 hover:text-primary-green transition duration-300 font-medium">
+                    <img src="https://placehold.co/32x32/4CAF50/FFFFFF?text={{user.first_name}}" alt="Profile"
+                        class="w-8 h-8 rounded-full object-cover border-2 border-primary-green">
+                    <span>Hello {{user.first_name}}</span>
+                </a>
+                {% else %}
+                <a href="login"
+                    class="px-3 py-1.5 rounded-md font-semibold bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 text-sm">Login</a>
+                <a href="signup"
+                    class="px-3 py-1.5 rounded-md font-semibold bg-primary-green text-white hover:bg-green-700 transition duration-300 text-sm">Sign
+                    Up</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <!-- Blog Hero Section -->
+        <header class="blog-hero animate-fadeIn">
+            <h1 class="animate-slideInLeft">
+                Our Fresh Insights <span class="text-primary-green">& Stories</span>
+            </h1>
+            <p class="animate-fadeIn" style="animation-delay: 0.2s;">
+                Dive into our latest articles on healthy eating, sustainable farming, and delicious recipes.
+            </p>
+        </header>
+
+        <!-- Latest Blog Posts Section (4-column grid) -->
+        <section class="py-16 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12 animate-fadeIn">
+                    ✨ Latest From Our Blog
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-8">
+                    <!-- Blog Post 1 -->
+                    <div class="blog-card animate-fadeIn" style="animation-delay: 0.3s;">
+                        <img src="https://placehold.co/400x200/B2DFDB/B2DFDB" alt="Healthy Eating">
+                        <p class="blog-date">July 1, 2025</p>
+                        <h3>The Benefits of Organic Produce for Your Health</h3>
+                        <p class="blog-context">
+                            Discover how choosing organic fruits and vegetables can significantly impact your
+                            well-being. From fewer pesticides to higher nutrient content, the advantages are clear...
+                        </p>
+                        <a href="#" class="read-more-button">Read More</a>
+                    </div>
+                    <!-- Blog Post 2 -->
+                    <div class="blog-card animate-fadeIn" style="animation-delay: 0.4s;">
+                        <img src="https://placehold.co/400x200/D1C4E9/D1C4E9" alt="Sustainable Farming">
+                        <p class="blog-date">June 25, 2025</p>
+                        <h3>Sustainable Farming Practices: A Look Behind the Scenes</h3>
+                        <p class="blog-context">
+                            Learn about the eco-friendly methods our farmers use to bring you the freshest produce while
+                            protecting the environment for future generations...
+                        </p>
+                        <a href="#" class="read-more-button">Read More</a>
+                    </div>
+                    <!-- Blog Post 3 -->
+                    <div class="blog-card animate-fadeIn" style="animation-delay: 0.5s;">
+                        <img src="https://placehold.co/400x200/FFF9C4/FFF9C4" alt="Summer Recipes">
+                        <p class="blog-date">June 18, 2025</p>
+                        <h3>Top 5 Refreshing Summer Recipes with Seasonal Fruits</h3>
+                        <p class="blog-context">
+                            Beat the heat with these delicious and easy-to-make recipes featuring the best of summer's
+                            bounty. Perfect for family gatherings or a quick snack...
+                        </p>
+                        <a href="#" class="read-more-button">Read More</a>
+                    </div>
+                    <!-- Blog Post 4 -->
+                    <div class="blog-card animate-fadeIn" style="animation-delay: 0.6s;">
+                        <img src="https://placehold.co/400x200/FFCDD2/FFCDD2" alt="Garden Tips">
+                        <p class="blog-date">June 10, 2025</p>
+                        <h3>Gardening Tips for Beginners: Grow Your Own Herbs</h3>
+                        <p class="blog-context">
+                            Start your own herb garden with our simple guide. From basil to rosemary, fresh herbs are
+                            just a few steps away, enhancing your cooking...
+                        </p>
+                        <a href="#" class="read-more-button">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- modal -->
+
+        <!-- All Blog Posts Section (single column) -->
+        <section class="py-16 px-4 bg-gray-50 scale: 0.5;">
+            <div class="container mx-auto max-w-3xl">
+                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12 animate-fadeIn">
+                    📚 All Our Articles
+                </h2>
+                <!-- Blog Post 5 -->
+                {% for blog in blogs reversed %}
+                <div class="single-column-blog-post animate-fadeIn" style="animation-delay: 0.7s;">
+                    <img src="{{blog.image}}" alt="{{blog.image}}">
+                    <p class="blog-date">{{blog.date}}</p>
+                    <h3>{{blog.header}}</h3>
+                    <p class="blog-context">
+                        {{blog.text|truncatewords:25}}
+                    </p>
+                    <a href="blog/{{blog.id}}" class="read-more-button">Read More </a>
+                </div>
+                {% endfor %}
+                <!-- Blog Post 6 -->
+                <div class="single-column-blog-post animate-fadeIn" style="animation-delay: 0.8s;">
+                    <img src="https://placehold.co/800x300/BBDEFB/1976D2" alt="Food Waste">
+                    <p class="blog-date">May 22, 2025</p>
+                    <h3>Reducing Food Waste at Home: Simple Tips and Tricks</h3>
+                    <p class="blog-context">
+                        Food waste is a global issue, but you can make a difference right in your kitchen. Learn
+                        practical ways to store produce, repurpose leftovers, and minimize your environmental
+                        footprint...
+                    </p>
+                    <a href="#" class="read-more-button">Read More</a>
+                </div>
+                <!-- Blog Post 7 -->
+                <div class="single-column-blog-post animate-fadeIn" style="animation-delay: 0.9s;">
+                    <img src="https://placehold.co/800x300/FFECB3/FFA000" alt="Seasonal Guide">
+                    <p class="blog-date">May 15, 2025</p>
+                    <h3>Your Guide to Seasonal Eating: What's Fresh This Month?</h3>
+                    <p class="blog-context">
+                        Eating seasonally isn't just about taste; it's about supporting local economies and enjoying
+                        produce at its peak. Our monthly guide helps you make informed choices...
+                    </p>
+                    <a href="#" class="read-more-button">Read More</a>
+                </div>
+                <!-- Blog Post 8 -->
+                <div class="single-column-blog-post animate-fadeIn" style="animation-delay: 1.0s;">
+                    <img src="https://placehold.co/800x300/F8BBD0/C2185B" alt="Recipe Innovation">
+                    <p class="blog-date">May 7, 2025</p>
+                    <h3>Innovative Ways to Use Leftover Vegetables</h3>
+                    <p class="blog-context">
+                        Don't let those last few veggies go to waste! Get creative with these innovative recipes that
+                        transform forgotten ingredients into delicious meals...
+                    </p>
+                    <a href="#" class="read-more-button">Read More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Strip -->
+        <section class="py-16 px-4 bg-primary-green text-center">
+            <div class="container mx-auto max-w-2xl">
+                <h2 class="text-4xl font-bold mb-6 animate-fadeIn text-white">
+                    Join Our Newsletter
+                </h2>
+                <p class="text-lg mb-8 animate-fadeIn text-gray-100" style="animation-delay: 0.2s;">
+                    Get weekly recipes & discounts in your inbox.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fadeIn"
+                    style="animation-delay: 0.4s;">
+                    <input type="email" placeholder="Enter your email"
+                        class="newsletter-input flex-grow px-6 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-lg placeholder-white" />
+                    <button
+                        class="newsletter-button px-8 py-3 rounded-full font-semibold text-lg transition duration-300">Subscribe</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-gray-900 text-white py-8 rounded-b-3xl px-4 animate-fadeIn">
+            <div class="container mx-auto text-center">
+                <div class="mb-4">
+                    <span class="text-3xl font-bold text-primary-green tracking-wide">UrbanBasket</span>
+                </div>
+                <div class="text-gray-400 mb-6">
+                    <p class="mb-1">📍 123 Farm-to-Table Lane, Organic City, ST 98765</p>
+                    <p class="mb-1">📞 +234 800 123 4567</p>
+                    <p>✉ info@urbanbasket.com</p>
+                </div>
+                <div class="flex justify-center space-x-6 text-2xl mb-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="Instagram"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="WhatsApp"><i
+                            class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="Twitter"><i
+                            class="fab fa-twitter"></i></a>
+                </div>
+                <div class="flex justify-center space-x-4 mt-4 text-sm">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">About</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Blog</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">FAQ</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>
+                </div>
+                <p class="text-gray-500 text-sm mt-6">&copy; 2025 UrbanBasket. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <!-- Scroll to Top Button -->
+        <button id="scrollToTopBtn" title="Go to top">
+            <i class="fas fa-leaf"></i>
+        </button>
+
+    </div> <!-- End of overall page wrapper -->
+
+    <script>
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UrbanBasket - Fresh from Farm to Table</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f8f8f8;
+            /* Light background for Apple-like feel */
+            color: #333;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+        }
+
+        /* Custom animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        .animate-slideInLeft {
+            animation: slideInLeft 0.8s ease-out forwards;
+        }
+
+        .animate-slideInRight {
+            animation: slideInRight 0.8s ease-out forwards;
+        }
+
+        .animate-pulse-hover:hover {
+            animation: pulse 0.7s infinite alternate;
+        }
+
+        /* Specific styles for the green color */
+        .text-primary-green {
+            color: #4CAF50;
+        }
+
+        .bg-primary-green {
+            background-color: #4CAF50;
+        }
+
+        .border-primary-green {
+            border-color: #4CAF50;
+        }
+
+        /* Apple-like button styling */
+        .apple-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .apple-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Hero section styling with the entire background as a smooth water-drop blob shape */
+        .hero-section-new {
+            background-color: #E0F2F1;
+            /* Light background for the hero content area */
+            min-height: 580px;
+            /* Reduced height for a smaller blob */
+            display: flex;
+            flex-direction: column;
+            /* Content stacked vertically */
+            align-items: center;
+            justify-content: center;
+            /* Center content vertically and horizontally */
+            padding: 4rem 2rem;
+            /* Padding for content inside the hero */
+            position: relative;
+            overflow: hidden;
+            /* Important for border-radius and inset shadow */
+            /* More natural and larger water-drop blob shape */
+            border-radius: 40% 60% 70% 30% / 50% 40% 60% 50%;
+            /* Water-like INNER shadow */
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.08),
+                /* Soft inner shadow */
+                inset 0 0 50px rgba(255, 255, 255, 0.2);
+            /* Inner highlight for liquid effect */
+
+            /* Subtle logo as background */
+            background-image: url('uploaded:Screenshot 2025-07-06 151947.png-f0274616-c1c6-4f77-bb3b-f0e5f5de85d7');
+            background-repeat: no-repeat;
+            background-position: center bottom -20px;
+            /* Adjusted position */
+            background-size: 300px;
+            /* Adjusted size */
+            opacity: 0.3;
+            /* Increased opacity */
+        }
+
+        .hero-content-wrapper {
+            display: flex;
+            flex-direction: column;
+            /* Content stacked vertically */
+            align-items: center;
+            text-align: center;
+            /* Center text */
+            width: 100%;
+            max-width: 900px;
+            /* Increased max-width for content */
+            margin: 0 auto;
+            /* Center content horizontally */
+            padding: 0 2rem;
+            /* Inner padding */
+            z-index: 10;
+            /* Ensure content is above background logo */
+            position: relative;
+            /* Needed for z-index to work */
+        }
+
+        /* Decorative elements styling - adjusted for the new shape */
+        .decorative-star {
+            position: absolute;
+            width: 40px;
+            /* Adjusted size */
+            height: 40px;
+            /* Adjusted size */
+            top: 8%;
+            /* Adjusted position */
+            left: 12%;
+            /* Adjusted position */
+            color: #4CAF50;
+            /* Green star */
+            opacity: 0.7;
+            transform: rotate(30deg);
+            /* Slightly more rotation */
+            z-index: 5;
+            /* Below content, above background logo */
+        }
+
+        .decorative-scribble {
+            position: absolute;
+            width: 70px;
+            /* Adjusted size */
+            height: 70px;
+            /* Adjusted size */
+            top: 20%;
+            /* Adjusted position */
+            right: 8%;
+            /* Adjusted position */
+            color: #4CAF50;
+            /* Green scribble */
+            opacity: 0.6;
+            transform: rotate(-20deg);
+            /* Slightly more rotation */
+            z-index: 5;
+            /* Below content, above background logo */
+        }
+
+        .decorative-dots {
+            position: absolute;
+            width: 50px;
+            /* Adjusted size */
+            height: 50px;
+            /* Adjusted size */
+            bottom: 8%;
+            /* Adjusted position */
+            left: 25%;
+            /* Adjusted position */
+            color: #4CAF50;
+            /* Green dots */
+            opacity: 0.5;
+            z-index: 5;
+            /* Below content, above background logo */
+        }
+
+        /* Problem-Solution card styling */
+        .problem-card,
+        .plan-card {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            /* More rounded */
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            /* Softer shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .problem-card:hover,
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Navbar specific styling for Apple-like blur */
+        .navbar-blur {
+            background-color: rgba(255, 255, 255, 0.7);
+            /* Slightly more opaque */
+            backdrop-filter: blur(8px);
+            /* Stronger blur effect */
+            -webkit-backdrop-filter: blur(8px);
+            /* For Safari support */
+        }
+
+        /* Specific style for sections with brand green background */
+        .bg-brand-green-section {
+            background-color: #4CAF50;
+            /* Brand green */
+            color: #ffffff;
+            /* White text on green background */
+        }
+
+        .bg-brand-green-section h2,
+        .bg-brand-green-section h3 {
+            color: #ffffff;
+            /* Ensure headings are white */
+        }
+
+        .bg-brand-green-section p {
+            /* Target paragraphs directly */
+            color: #E0F2F1;
+            /* Lighter text for contrast */
+        }
+
+        .bg-brand-green-section .apple-button {
+            background-color: #ffffff;
+            color: #4CAF50;
+        }
+
+        .bg-brand-green-section .apple-button:hover {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .bg-brand-green-section .product-card {
+            background-color: rgba(255, 255, 255, 0.95);
+            /* Slightly more opaque white for cards */
+            color: #333;
+        }
+
+        .bg-brand-green-section .product-card h3,
+        .bg-brand-green-section .product-card p {
+            color: #333;
+        }
+
+        .bg-brand-green-section .product-card .add-to-box-button {
+            background-color: #4CAF50;
+            color: #ffffff;
+        }
+
+        .bg-brand-green-section .product-card .add-to-box-button:hover {
+            background-color: #388E3C;
+        }
+
+        .bg-brand-green-section .newsletter-input {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.4);
+            color: #ffffff;
+        }
+
+        .bg-brand-green-section .newsletter-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .bg-brand-green-section .newsletter-button {
+            background-color: #ffffff;
+            color: #4CAF50;
+        }
+
+        .bg-brand-green-section .newsletter-button:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Meet Our Farmers card specific styling */
+        .farmer-card {
+            background-color: #F0FDF4;
+            /* Very light green */
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .farmer-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .farmer-card h3 {
+            color: #1a202c;
+            /* Dark gray for headings */
+        }
+
+        .farmer-card p {
+            color: #4a5568;
+            /* Medium gray for paragraphs */
+        }
+
+        /* Scroll to top button */
+        #scrollToTopBtn {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Fixed position */
+            bottom: 30px;
+            /* Place at the bottom */
+            right: 30px;
+            /* Place at the right */
+            z-index: 99;
+            /* High z-index to be on top of other elements */
+            background-color: #4CAF50;
+            /* Green background */
+            color: white;
+            /* White icon */
+            border: none;
+            /* No border */
+            border-radius: 50%;
+            /* Circular shape */
+            width: 50px;
+            /* Width of the button */
+            height: 50px;
+            /* Height of the button */
+            font-size: 24px;
+            /* Icon size */
+            cursor: pointer;
+            /* Pointer cursor on hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            /* Subtle shadow */
+            transition: background-color 0.3s, transform 0.3s, opacity 0.3s;
+            /* Smooth transitions */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #388E3C;
+            /* Darker green on hover */
+            transform: translateY(-3px);
+            /* Slight lift effect */
+        }
+
+        #scrollToTopBtn i {
+            transform: rotate(-90deg);
+            /* Rotate the leaf icon to point upwards */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .hero-section-new {
+                min-height: auto;
+                padding-bottom: 2rem;
+                /* Simpler blob for tablet */
+                border-radius: 30% 70% 60% 40% / 50% 30% 70% 50%;
+                background-size: 150px;
+                /* Adjust size for smaller screens */
+                background-position: center bottom -20px;
+            }
+
+            .decorative-star,
+            .decorative-scribble,
+            .decorative-dots {
+                display: none;
+                /* Hide decorative elements on smaller screens for cleaner look */
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-section-new {
+                padding: 3rem 1rem;
+                /* Even simpler blob for mobile */
+                border-radius: 20% 80% 50% 50% / 50% 50% 50% 50%;
+                background-size: 100px;
+                /* Adjust size for mobile */
+                background-position: center bottom -10px;
+            }
+
+            .grid-cols-4-md {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+                /* 2 columns on mobile */
+            }
+
+            .grid-cols-3-md {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+                /* 1 column on mobile for products/plans */
+            }
+
+            .grid-cols-2-md {
+                grid-template-columns: repeat(1, minmax(0, 1fr));
+                /* 1 column on mobile for blog */
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Overall Page Wrapper - This creates the white border and rounded main content area -->
+    <div class="mx-auto max-w-7xl bg-white shadow-lg overflow-hidden">
+
+        <!-- Navbar -->
+        <nav class="bg-white p-5 shadow-sm flex items-center animate-fadeIn navbar-blur" style="animation-delay: 0.1s;">
+            <!-- Logo -->
+            <div class="text-3xl font-bold text-primary-green tracking-wide flex-shrink-0">UrbanBasket</div>
+
+            <!-- Main Navigation Links - Centered -->
+            <ul class="flex-grow flex justify-center items-center space-x-4 text-base list-none">
+                <li><a href="/"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Home</a></li>
+                <li><a href="product"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Products</a>
+                </li>
+                <li><a href="aboutus"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">About</a>
+                </li>
+                <li><a href="blog"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Blog</a></li>
+                <li><a href="contactus"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Profile Picture & Login/Signup Buttons - Right Aligned -->
+            <div class="flex items-center space-x-4 flex-shrink-0">
+                <!-- Profile Picture Link -->
+                {% if user.is_authenticated %}
+                <a href="#profile"
+                    class="flex items-center space-x-2 text-gray-700 hover:text-primary-green transition duration-300 font-medium">
+                    <img src="https://placehold.co/32x32/4CAF50/FFFFFF?text={{user.first_name}}" alt="Profile"
+                        class="w-8 h-8 rounded-full object-cover border-2 border-primary-green">
+                    <span>Hello {{user.first_name}}</span>
+                </a>
+                {% else %}
+                <a href="login"
+                    class="px-3 py-1.5 rounded-md font-semibold bg-gray-200 text-gray-800 hover:bg-gray-300 transition duration-300 text-sm">Login</a>
+                <a href="signup"
+                    class="px-3 py-1.5 rounded-md font-semibold bg-primary-green text-white hover:bg-green-700 transition duration-300 text-sm">Sign
+                    Up</a>
+                {% endif %}
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <header class="hero-section-new animate-fadeIn" style="animation-delay: 0.3s;">
+            <div class="hero-content-wrapper">
+                <h1 class="text-6xl md:text-7xl font-extrabold text-gray-900 leading-tight mb-4 animate-slideInLeft">
+                    <span class="text-primary-green">Freshness</span> & <br>
+                    <span class="text-gray-900">Quality,</span> Delivered.
+                </h1>
+                <p class="text-xl text-gray-700 mb-8 animate-slideInRight" style="animation-delay: 0.2s;">
+                    Experience farm-fresh organic produce, straight from local farms to your doorstep.
+                </p>
+                <a href="product"
+                    class="inline-block bg-primary-green text-white text-lg font-semibold py-4 px-10 rounded-full apple-button animate-pulse-hover animate-fadeIn"
+                    style="animation-delay: 0.5s;">
+                    Shop Now
+                </a>
+            </div>
+
+            <!-- Decorative Elements -->
+            <div class="decorative-star">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-full h-full">
+                    <path fill-rule="evenodd"
+                        d="M10.788 3.21c.448-1.077 1.976-1.077 2.424 0l2.082 5.007 5.404.433c1.164.093 1.636 1.545.749 2.305l-4.117 3.527 1.257 5.273c.271 1.136-.964 2.033-1.96 1.425L12 18.354 7.373 21.18c-.996.608-2.231-.289-1.96-1.425l1.257-5.273-4.117-3.527c-.887-.76-.415-2.212.749-2.305l5.404-.433 2.082-5.007Z"
+                        clip-rule="evenodd" />
+                </svg>
+            </div>
+            <div class="decorative-scribble">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-full h-full">
+                    <path
+                        d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1.75 14.25c-.2-.2-.5-.2-.7 0l-1.5 1.5c-.2.2-.5.2-.7 0l-1.5-1.5c-.2-.2-.5-.2-.7 0s-.2.5 0 .7l1.5 1.5c.2.2.5.2.7 0l1.5-1.5c.2-.2.2-.5 0-.7zM12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
+                </svg>
+            </div>
+        </header>
+
+        <!-- Value Proposition / Problem Solving Section (from previous iteration) -->
+        <section class="py-16 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12 animate-fadeIn"
+                    style="animation-delay: 0.7s;">
+                    Solving Your Fresh Food Dilemmas
+                </h2>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Problem 1 -->
+                    <div class="problem-card animate-fadeIn" style="animation-delay: 0.9s;">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-3">🚨 Problem: City people don’t trust store
+                            produce</h3>
+                        <p class="text-gray-600 mb-4">Most produce in stores is not fresh or has sat on shelves for
+                            days. It's also hard to tell if it's truly organic or chemical-free.</p>
+                        <h4 class="text-lg font-bold text-primary-green mb-2">✅ UrbanBasket’s solution:</h4>
+                        <p class="text-gray-700">Delivers fresh, organic produce from trusted local farms within hours
+                            of harvesting — not days later.</p>
+                    </div>
+
+                    <!-- Problem 2 -->
+                    <div class="problem-card animate-fadeIn" style="animation-delay: 1.1s;">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-3">⏱️ Problem: People are too busy to go to
+                            the market</h3>
+                        <p class="text-gray-600 mb-4">Many urban professionals don’t have time to go to open markets or
+                            specialty stores for fresh food.</p>
+                        <h4 class="text-lg font-bold text-primary-green mb-2">✅ UrbanBasket’s solution:</h4>
+                        <p class="text-gray-700">Brings the farmers’ market to their doorstep with same-day delivery.
+                        </p>
+                    </div>
+
+                    <!-- Problem 3 -->
+                    <div class="problem-card animate-fadeIn" style="animation-delay: 1.3s;">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-3">🚜 Problem: Local farmers don’t get access
+                            to city customers</h3>
+                        <p class="text-gray-600 mb-4">Farmers struggle to sell directly to consumers and often lose
+                            profits to middlemen.</p>
+                        <h4 class="text-lg font-bold text-primary-green mb-2">✅ UrbanBasket’s solution:</h4>
+                        <p class="text-gray-700">Creates a direct channel between farmers and city consumers, helping
+                            farmers earn more and waste less.</p>
+                    </div>
+
+                    <!-- Problem 4 -->
+                    <div class="problem-card animate-fadeIn" style="animation-delay: 1.5s;">
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-3">🧺 Problem: People want healthy food but
+                            don’t know where to start</h3>
+                        <p class="text-gray-600 mb-4">Urban customers want to eat clean but don’t know what to buy, how
+                            to cook it, or where to get it.</p>
+                        <h4 class="text-lg font-bold text-primary-green mb-2">✅ UrbanBasket’s solution:</h4>
+                        <p class="text-gray-700">Offers subscription boxes with curated fresh items + weekly recipes and
+                            health tips to guide healthy eating habits.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 1: "Why Choose UrbanBasket?" -->
+        <section class="py-16 px-4">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12 animate-fadeIn">
+                    Why Choose UrbanBasket?
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 text-center">
+                    <div class="flex flex-col items-center animate-fadeIn" style="animation-delay: 0.2s;">
+                        <span class="text-primary-green text-6xl mb-4">⏱️</span>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Fast 3-hour delivery</h3>
+                        <p class="text-gray-700">Get your produce swiftly, straight to your door.</p>
+                    </div>
+                    <div class="flex flex-col items-center animate-fadeIn" style="animation-delay: 0.4s;">
+                        <span class="text-primary-green text-6xl mb-4">🌿</span>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">100% Organic</h3>
+                        <p class="text-gray-700">Sourced directly from trusted local organic farms.</p>
+                    </div>
+                    <div class="flex flex-col items-center animate-fadeIn" style="animation-delay: 0.6s;">
+                        <span class="text-primary-green text-6xl mb-4">✨</span>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Freshness Guaranteed</h3>
+                        <p class="text-gray-700">Only the freshest produce makes it into your basket.</p>
+                    </div>
+                    <div class="flex flex-col items-center animate-fadeIn" style="animation-delay: 0.8s;">
+                        <span class="text-primary-green text-6xl mb-4">🔄</span>
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2">Flexible Subscriptions</h3>
+                        <p class="text-gray-700">Tailor your delivery frequency and contents to your needs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: Featured Products (Brand Color Background) -->
+        <section class="py-16 px-4 bg-brand-green-section">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-12 animate-fadeIn text-white">
+                    Featured Products
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3-md xl:grid-cols-4 gap-8">
+                    <!-- Product 1 -->
+                    <div class="product-card rounded-xl p-6 text-center animate-fadeIn" style="animation-delay: 0.2s;">
+                        <img src="https://placehold.co/200x150/F0FDF4/4CAF50?text=Organic+Tomatoes"
+                            alt="Organic Tomatoes" class="w-full h-40 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Organic Tomatoes</h3>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦1,200</p>
+                        <button
+                            class="add-to-box-button px-6 py-3 rounded-full font-semibold transition duration-300">Add
+                            to Box</button>
+                    </div>
+                    <!-- Product 2 -->
+                    <div class="product-card rounded-xl p-6 text-center animate-fadeIn" style="animation-delay: 0.4s;">
+                        <img src="https://placehold.co/200x150/F0FDF4/4CAF50?text=Fresh+Spinach" alt="Fresh Spinach"
+                            class="w-full h-40 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Fresh Spinach</h3>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦800</p>
+                        <button
+                            class="add-to-box-button px-6 py-3 rounded-full font-semibold transition duration-300">Add
+                            to Box</button>
+                    </div>
+                    <!-- Product 3 -->
+                    <div class="product-card rounded-xl p-6 text-center animate-fadeIn" style="animation-delay: 0.6s;">
+                        <img src="https://placehold.co/200x150/F0FDF4/4CAF50?text=Ripe+Avocados" alt="Avocados"
+                            class="w-full h-40 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Ripe Avocados</h3>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦1,500</p>
+                        <button
+                            class="add-to-box-button px-6 py-3 rounded-full font-semibold transition duration-300">Add
+                            to Box</button>
+                    </div>
+                    <!-- Product 4 -->
+                    <div class="product-card rounded-xl p-6 text-center animate-fadeIn" style="animation-delay: 0.8s;">
+                        <img src="https://placehold.co/200x150/F0FDF4/4CAF50?text=Sweet+Potatoes" alt="Sweet Potatoes"
+                            class="w-full h-40 object-cover rounded-md mb-4">
+                        <h3 class="text-xl font-semibold mb-2">Sweet Potatoes</h3>
+                        <p class="text-lg font-bold text-primary-green mb-4">₦1,000</p>
+                        <button
+                            class="add-to-box-button px-6 py-3 rounded-full font-semibold transition duration-300">Add
+                            to Box</button>
+                    </div>
+                </div>
+                <div class="text-center mt-12 animate-fadeIn" style="animation-delay: 1s;">
+                    <a href="#"
+                        class="inline-block px-8 py-4 bg-white text-primary-green font-semibold rounded-full hover:bg-gray-100 transition duration-300">View
+                        All Products →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: Subscription Plans -->
+        <section class="py-16 px-4 bg-gray-50">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12 animate-fadeIn">
+                    Our Subscription Plans
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3-md gap-8">
+                    <!-- Plan 1: Weekly Fresh Box -->
+                    <div class="plan-card text-center animate-fadeIn" style="animation-delay: 0.2s;">
+                        <span class="text-6xl mb-4">🧺</span>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-2">Weekly Fresh Box</h3>
+                        <p class="text-gray-700 mb-4">• 10 seasonal items</p>
+                        <p class="text-3xl font-bold text-primary-green mb-6">₦5,000<span
+                                class="text-xl text-gray-500">/week</span></p>
+                        <button
+                            class="bg-primary-green text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition duration-300 apple-button">Subscribe</button>
+                    </div>
+                    <!-- Plan 2: Monthly Essentials Box -->
+                    <div class="plan-card text-center animate-fadeIn" style="animation-delay: 0.4s;">
+                        <span class="text-6xl mb-4">📦</span>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-2">Monthly Essentials Box</h3>
+                        <p class="text-gray-700 mb-4">• 20 core produce items</p>
+                        <p class="text-3xl font-bold text-primary-green mb-6">₦18,000<span
+                                class="text-xl text-gray-500">/month</span></p>
+                        <button
+                            class="bg-primary-green text-white px-8 py-3 rounded-full font-semibold hover:bg-green-700 transition duration-300 apple-button">Subscribe</button>
+                    </div>
+                    <!-- Plan 3: Custom Box (Coming Soon) -->
+                    <div class="plan-card text-center animate-fadeIn" style="animation-delay: 0.6s;">
+                        <span class="text-6xl mb-4">🌱</span>
+                        <h3 class="text-2xl font-semibold text-gray-900 mb-2">Custom Box (coming soon)</h3>
+                        <p class="text-gray-700 mb-4">• Pick your items</p>
+                        <p class="text-3xl font-bold text-gray-400 mb-6">Flexible price</p>
+                        <button
+                            class="bg-gray-300 text-gray-700 px-8 py-3 rounded-full font-semibold cursor-not-allowed">Notify
+                            Me</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: Meet Our Farmers (Brand Color Background with varied card layout) -->
+        <section class="py-16 px-4 bg-brand-green-section">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center mb-12 animate-fadeIn text-white">
+                    Meet Our Farmers
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Farmer 1 (Horizontal on large screens) -->
+                    <div class="farmer-card animate-fadeIn lg:col-span-2 flex flex-col md:flex-row items-center text-center md:text-left"
+                        style="animation-delay: 0.2s;">
+                        <img src="https://placehold.co/150x150/90EE90/FFFFFF?text=Farmer+John" alt="Farmer John"
+                            class="w-32 h-32 rounded-full mx-auto md:mx-0 md:mr-6 mb-4 md:mb-0 object-cover border-2 border-primary-green">
+                        <div>
+                            <h3
+                                class="text-xl font-semibold text-gray-900 mb-2 flex items-center justify-center md:justify-start">
+                                Farmer John <i class="fa-solid fa-seedling text-primary-green ml-2"></i> – Green Acres
+                                Farm – Lagos
+                            </h3>
+                            <p class="italic text-gray-700 text-lg mt-2">"UrbanBasket helps us reach customers who truly
+                                appreciate fresh, organic produce and supports sustainable farming practices."</p>
+                        </div>
+                    </div>
+                    <!-- Farmer 2 -->
+                    <div class="farmer-card animate-fadeIn" style="animation-delay: 0.4s;">
+                        <img src="https://placehold.co/150x150/90EE90/FFFFFF?text=Farmer+Sarah" alt="Farmer Sarah"
+                            class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-2 border-primary-green">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2 flex items-center justify-center">
+                            Farmer Sarah <i class="fa-solid fa-tractor text-primary-green ml-2"></i> – Sunny Fields –
+                            Ogun State
+                        </h3>
+                        <p class="italic text-gray-700 text-lg mt-2">"It's great to connect directly with city dwellers.
+                            They love our produce and we love growing it for them!"</p>
+                    </div>
+                    <!-- Farmer 3 -->
+                    <div class="farmer-card animate-fadeIn" style="animation-delay: 0.6s;">
+                        <img src="https://placehold.co/150x150/90EE90/FFFFFF?text=Farmer+Ade" alt="Farmer Ade"
+                            class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-2 border-primary-green">
+                        <h3 class="text-xl font-semibold text-gray-900 mb-2 flex items-center justify-center">
+                            Farmer Ade <i class="fa-solid fa-hand-holding-heart text-primary-green ml-2"></i> – Harvest
+                            Hub – Oyo State
+                        </h3>
+                        <p class="italic text-gray-700 text-lg mt-2">"Less waste, more direct sales. UrbanBasket is a
+                            game-changer for local farmers and the community."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: Latest from Our Blog -->
+        <section class="py-16 px-4 bg-gray-50">
+            <div class="container mx-auto">
+                <h2 class="text-4xl font-bold text-center text-gray-800 mb-12 animate-fadeIn">
+                    Latest from Our Blog
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2-md lg:grid-cols-2 gap-8">
+                    <!-- Blog Post 1 -->
+                    <div class="bg-white rounded-2xl shadow-md overflow-hidden animate-fadeIn"
+                        style="animation-delay: 0.2s;">
+                        <img src="https://placehold.co/600x400/F0FDF4/4CAF50?text=Detox+Juices" alt="Detox Juices"
+                            class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-3">5 Detox Juices for a Healthy Morning
+                            </h3>
+                            <p class="text-gray-700 mb-4">Discover refreshing and nutritious juice recipes to kickstart
+                                your day.</p>
+                            <a href="#" class="text-primary-green font-semibold hover:underline">Read More →</a>
+                        </div>
+                    </div>
+                    <!-- Blog Post 2 -->
+                    <div class="bg-white rounded-2xl shadow-md overflow-hidden animate-fadeIn"
+                        style="animation-delay: 0.4s;">
+                        <img src="https://placehold.co/600x400/F0FDF4/4CAF50?text=Farmers+Support" alt="Farmers Support"
+                            class="w-full h-64 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-2xl font-semibold text-gray-900 mb-3">How UrbanBasket Supports Local Farmers
+                            </h3>
+                            <p class="text-gray-700 mb-4">Learn about our commitment to sustainable agriculture and fair
+                                farmer partnerships.</p>
+                            <a href="#" class="text-primary-green font-semibold hover:underline">Read More →</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-12 animate-fadeIn" style="animation-delay: 0.6s;">
+                    <a href="#"
+                        class="inline-block px-8 py-4 border border-primary-green text-primary-green font-semibold rounded-full hover:bg-primary-green hover:text-white transition duration-300">View
+                        All Blog Posts →</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 6: Join Our Newsletter (Brand Color Background) -->
+        <section class="py-16 px-4 bg-brand-green-section text-center">
+            <div class="container mx-auto max-w-2xl">
+                <h2 class="text-4xl font-bold mb-6 animate-fadeIn text-white">
+                    Join Our Newsletter
+                </h2>
+                <p class="text-lg mb-8 animate-fadeIn text-gray-100" style="animation-delay: 0.2s;">
+                    Get weekly recipes & discounts in your inbox.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fadeIn"
+                    style="animation-delay: 0.4s;">
+                    <input type="email" placeholder="Enter your email"
+                        class="newsletter-input flex-grow px-6 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent text-lg placeholder-white" />
+                    <button
+                        class="newsletter-button px-8 py-3 rounded-full font-semibold text-lg transition duration-300">Subscribe</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-gray-900 text-white py-8 rounded-b-3xl px-4 animate-fadeIn" style="animation-delay: 0.6s;">
+            <div class="container mx-auto text-center">
+                <div class="mb-4">
+                    <span class="text-3xl font-bold text-primary-green tracking-wide">UrbanBasket</span>
+                </div>
+                <div class="text-gray-400 mb-6">
+                    <p class="mb-1">📍 123 Farm-to-Table Lane, Organic City, ST 98765</p>
+                    <p class="mb-1">📞 +234 800 123 4567</p>
+                    <p>✉ info@urbanbasket.com</p>
+                </div>
+                <div class="flex justify-center space-x-6 text-2xl mb-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="Instagram"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="WhatsApp"><i
+                            class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="Twitter"><i
+                            class="fab fa-twitter"></i></a>
+                </div>
+                <div class="flex justify-center space-x-4 mt-4 text-sm">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">About</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Blog</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">FAQ</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>
+                </div>
+                <p class="text-gray-500 text-sm mt-6">&copy; 2025 UrbanBasket. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <!-- Scroll to Top Button -->
+        <button id="scrollToTopBtn" title="Go to top">
+            <i class="fas fa-leaf"></i>
+        </button>
+
+    </div> <!-- End of overall page wrapper -->
+
+    <script>
+        // Get the button
+        let mybutton = document.getElementById("scrollToTopBtn");
+
+        // When the user scrolls down 300px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                mybutton.style.display = "flex"; // Use flex to center icon
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        mybutton.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth' // Smooth scroll
+            });
+        });
+    </script>
+
+</body>
+
+</html>

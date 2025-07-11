@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Blog Post - UrbanBasket</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Manrope', sans-serif;
+            background-color: #f8f8f8;
+            /* Light background for Apple-like feel */
+            color: #333;
+            overflow-x: hidden;
+            /* Prevent horizontal scroll */
+        }
+
+        /* Custom animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fadeIn {
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        /* Specific styles for the green color */
+        .text-primary-green {
+            color: #4CAF50;
+        }
+
+        .bg-primary-green {
+            background-color: #4CAF50;
+        }
+
+        .border-primary-green {
+            border-color: #4CAF50;
+        }
+
+        /* Apple-like button styling */
+        .apple-button {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .apple-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Navbar specific styling for Apple-like blur */
+        .navbar-blur {
+            background-color: rgba(255, 255, 255, 0.7);
+            /* Slightly more opaque */
+            backdrop-filter: blur(8px);
+            /* Stronger blur effect */
+            -webkit-backdrop-filter: blur(8px);
+            /* For Safari support */
+        }
+
+        /* Main Content Area Styling */
+        .main-content-area {
+            min-height: calc(100vh - 160px);
+            /* Adjust based on navbar/footer height */
+            display: flex;
+            flex-direction: column;
+            /* Stack content vertically on small screens */
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background-color: #E0F2F1;
+            /* Light background for the section */
+        }
+
+        /* Form Styling */
+        .add-blog-form {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 450px;
+            /* Max width for the form */
+            background-color: #ffffff;
+            color: #333;
+            padding: 2rem;
+            box-sizing: border-box;
+            border-radius: 1.5rem;
+            /* More rounded */
+            gap: 1.25rem;
+            /* Tailwind gap-5 */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            /* Lifted shadow */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 2rem;
+            /* Space between form and preview on small screens */
+        }
+
+        .add-blog-form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .add-blog-form h1 {
+            font-size: 2.25rem;
+            /* text-4xl */
+            font-weight: 800;
+            /* font-extrabold */
+            color: #1a202c;
+            /* gray-900 */
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .add-blog-form label {
+            display: block;
+            text-align: left;
+            font-weight: 600;
+            color: #4a5568;
+            /* gray-700 */
+            margin-bottom: 0.25rem;
+            /* Reduced margin */
+            font-size: 0.95rem;
+        }
+
+        .add-blog-form input[type="text"],
+        .add-blog-form textarea {
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            /* More rounded */
+            border: 1px solid #e2e8f0;
+            /* Light gray border */
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.06);
+            /* Subtle inner shadow */
+        }
+
+        .add-blog-form input[type="text"]:focus,
+        .add-blog-form textarea:focus {
+            outline: none;
+            border-color: #4CAF50;
+            /* Green border on focus */
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.3);
+            /* Green ring on focus */
+        }
+
+        .add-blog-form textarea {
+            min-height: 120px;
+            /* Larger height for content textarea */
+            resize: vertical;
+            /* Allow vertical resizing */
+        }
+
+        .add-blog-form button {
+            padding: 0.8rem 1.5rem;
+            border-radius: 9999px;
+            /* Fully rounded */
+            border: none;
+            background: #4CAF50;
+            /* Primary green */
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .add-blog-form button:hover {
+            background: #388E3C;
+            /* Darker green on hover */
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Preview Styling - Similar to a single blog post card */
+        .preview-card {
+            width: 100%;
+            max-width: 600px;
+            /* Max width for the preview */
+            background-color: #ffffff;
+            height: auto;
+            /* Auto height based on content */
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            border-radius: 1.5rem;
+            /* More rounded */
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            /* Lifted shadow */
+            overflow: hidden;
+            /* Ensure content stays within rounded corners */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .preview-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .preview-card>img {
+            width: 100%;
+            max-height: 250px;
+            /* Max height for preview image */
+            object-fit: cover;
+            border-radius: 1rem;
+            /* Rounded image corners */
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            /* Subtle shadow for image */
+        }
+
+        .preview-card>h1 {
+            font-size: 1.8rem;
+            /* Larger header for preview */
+            font-weight: 700;
+            color: #1a202c;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+            text-align: left;
+            /* Align text left */
+        }
+
+        .preview-card>p {
+            font-size: 1rem;
+            color: #4a5568;
+            line-height: 1.6;
+            text-align: justify;
+            /* Justify text for content */
+        }
+
+        /* Scroll to top button */
+        #scrollToTopBtn {
+            display: none;
+            /* Hidden by default */
+            position: fixed;
+            /* Fixed position */
+            bottom: 30px;
+            /* Place at the bottom */
+            right: 30px;
+            /* Place at the right */
+            z-index: 99;
+            /* High z-index to be on top of other elements */
+            background-color: #4CAF50;
+            /* Green background */
+            color: white;
+            /* White icon */
+            border: none;
+            /* No border */
+            border-radius: 50%;
+            /* Circular shape */
+            width: 50px;
+            /* Width of the button */
+            height: 50px;
+            /* Height of the button */
+            font-size: 24px;
+            /* Icon size */
+            cursor: pointer;
+            /* Pointer cursor on hover */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            /* Subtle shadow */
+            transition: background-color 0.3s, transform 0.3s, opacity 0.3s;
+            /* Smooth transitions */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #scrollToTopBtn:hover {
+            background-color: #388E3C;
+            /* Darker green on hover */
+            transform: translateY(-3px);
+            /* Slight lift effect */
+        }
+
+        #scrollToTopBtn i {
+            transform: rotate(-90deg);
+            /* Rotate the leaf icon to point upwards */
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+
+            /* Medium screens and up */
+            .main-content-area {
+                flex-direction: row;
+                /* Side-by-side layout */
+                gap: 3rem;
+                /* Space between form and preview */
+                align-items: flex-start;
+                /* Align items to the top */
+            }
+
+            .add-blog-form {
+                margin-bottom: 0;
+                /* Remove bottom margin when side-by-side */
+            }
+        }
+
+        @media (max-width: 767px) {
+
+            /* Small screens */
+            .add-blog-form {
+                padding: 1.5rem;
+            }
+
+            .add-blog-form h1 {
+                font-size: 1.8rem;
+            }
+
+            .add-blog-form label,
+            .add-blog-form input,
+            .add-blog-form textarea {
+                font-size: 0.9rem;
+            }
+
+            .add-blog-form button {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .preview-card {
+                padding: 1rem;
+            }
+
+            .preview-card>h1 {
+                font-size: 1.5rem;
+            }
+
+            .preview-card>p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+
+    <!-- Overall Page Wrapper -->
+    <div class="mx-auto max-w-7xl bg-white shadow-lg overflow-hidden">
+
+        <!-- Navbar -->
+        <nav class="bg-white p-5 shadow-sm flex items-center navbar-blur">
+            <!-- Logo -->
+            <div class="text-3xl font-bold text-primary-green tracking-wide flex-shrink-0">UrbanBasket</div>
+
+            <!-- Main Navigation Links - Centered -->
+            <ul class="flex-grow flex justify-center items-center space-x-4 text-base list-none">
+                <li><a href="index.html"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Home</a></li>
+                <li><a href="products.html"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Products</a>
+                </li>
+                <li><a href="about.html"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">About</a>
+                </li>
+                <li><a href="blog.html" class="text-primary-green transition duration-300 font-medium">Blog</a></li>
+                <li><a href="contact.html"
+                        class="text-gray-700 hover:text-primary-green transition duration-300 font-medium">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Profile Picture & Login/Signup Buttons - Right Aligned -->
+            <div class="flex items-center space-x-4 flex-shrink-0">
+                <a href="#profile"
+                    class="flex items-center space-x-2 text-gray-700 hover:text-primary-green transition duration-300 font-medium">
+                    <img src="https://placehold.co/32x32/4CAF50/FFFFFF?text=Guest" alt="Profile"
+                        class="w-8 h-8 rounded-full object-cover border-2 border-primary-green">
+                    <span>Hello Guest</span>
+                </a>
+                <a href="#"
+                    class="px-3 py-1.5 rounded-md font-semibold bg-gray-200 text-gray-800 hover:bg-primary-green hover:text-white transition duration-300 text-sm">Login</a>
+                <a href="#"
+                    class="px-3 py-1.5 rounded-md font-semibold bg-primary-green text-white hover:bg-green-700 transition duration-300 text-sm">Sign
+                    Up</a>
+            </div>
+        </nav>
+
+        <!-- Main Content Area: Form and Preview -->
+        <section class="main-content-area animate-fadeIn">
+            <!-- Add Blog Form -->
+            <form action="addblog" method="post" id="addBlogForm" class="add-blog-form">
+                <h1>Add New Blog</h1>
+                <label for="image_url">Image Link</label>
+                <input name="image_url" id="image_url" type="url" placeholder="Enter image URL" required />
+                <label for="title">Title</label>
+                <input name="title" id="title" type="text" placeholder="Enter blog title" required />
+                <label for="text">Content</label>
+                <textarea name="text" id="text" placeholder="Write your blog content here..." required></textarea>
+                <button type="submit" class="submit">Publish Blog</button>
+            </form>
+
+            <!-- Preview Section -->
+            <div class="preview-card">
+                <img id="image_preview" src="https://placehold.co/600x400/F0FDF4/4CAF50?text=Blog+Image"
+                    alt="Blog Image Preview"
+                    onerror="this.onerror=null;this.src='https://placehold.co/600x400/CCCCCC/FFFFFF?text=Image+Load+Error';" />
+                <h1 id="header_preview">Your Blog Title Here</h1>
+                <p id="content_preview">
+                    Start typing in the content box to see your blog post preview appear here. This section will reflect
+                    the image, title, and content you enter, giving you a live look at your post before publishing.
+                </p>
+            </div>
+        </section>
+
+        <!-- FOOTER -->
+        <footer class="bg-gray-900 text-white py-8 rounded-b-3xl px-4 animate-fadeIn">
+            <div class="container mx-auto text-center">
+                <div class="mb-4">
+                    <span class="text-3xl font-bold text-primary-green tracking-wide">UrbanBasket</span>
+                </div>
+                <div class="text-gray-400 mb-6">
+                    <p class="mb-1">📍 123 Farm-to-Table Lane, Organic City, ST 98765</p>
+                    <p class="mb-1">📞 +234 800 123 4567</p>
+                    <p>✉ info@urbanbasket.com</p>
+                </div>
+                <div class="flex justify-center space-x-6 text-2xl mb-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="Instagram"><i
+                            class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="WhatsApp"><i
+                            class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300" aria-label="Twitter"><i
+                            class="fab fa-twitter"></i></a>
+                </div>
+                <div class="flex justify-center space-x-4 mt-4 text-sm">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">About</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Blog</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Contact</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">FAQ</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">Terms of Service</a>
+                </div>
+                <p class="text-gray-500 text-sm mt-6">&copy; 2025 UrbanBasket. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <!-- Scroll to Top Button -->
+        <button id="scrollToTopBtn" title="Go to top">
+            <i class="fas fa-leaf"></i>
+        </button>
+
+    </div> <!-- End of overall page wrapper -->
+
+    <script>
+        let image_url = document.getElementById('image_url');
+        let title = document.getElementById('title');
+        let text = document.getElementById('text');
+
+        let imagePreview = document.getElementById('image_preview');
+        let headerPreview = document.getElementById('header_preview');
+        let contentPreview = document.getElementById('content_preview');
+
+        // Function to update the preview
+        function updatePreview() {
+            // Update image preview, add fallback for broken images
+            if (image_url.value) {
+                imagePreview.src = image_url.value;
+            } else {
+                // Placeholder if no URL is entered
+                imagePreview.src = "https://placehold.co/600x400/F0FDF4/4CAF50?text=Blog+Image";
+            }
+
+            // Update header preview
+            headerPreview.textContent = title.value || "Your Blog Title Here";
+
+            // Update content preview
+            contentPreview.textContent = text.value || "Start typing in the content box to see your blog post preview appear here. This section will reflect the image, title, and content you enter, giving you a live look at your post before publishing.";
+        }
+
+        // Add event listeners for live updates
+        image_url.addEventListener('input', updatePreview);
+        title.addEventListener('input', updatePreview);
+        text.addEventListener('input', updatePreview);
+
+        // Initial preview update on page load
+        document.addEventListener('DOMContentLoaded', updatePreview);
+
+
+        // Scroll to top button logic
+        let scrollToTopBtn = document.getElementById("scrollToTopBtn");
+
+        window.onscroll = function () {
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                scrollToTopBtn.style.display = "flex";
+            } else {
+                scrollToTopBtn.style.display = "none";
+            }
+        };
+
+        scrollToTopBtn.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+
+</body>
+
+</html>
