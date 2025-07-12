@@ -290,6 +290,7 @@
             /* Rotate the leaf icon to point upwards */
         }
 
+
         /* Responsive adjustments */
         @media (min-width: 768px) {
 
@@ -392,6 +393,7 @@
         <section class="main-content-area animate-fadeIn">
             <!-- Add Blog Form -->
             <form action="addblog" method="post" id="addBlogForm" class="add-blog-form">
+                {% csrf_token %}
                 <h1>Add New Blog</h1>
                 <label for="image_url">Image Link</label>
                 <input name="image_url" id="image_url" type="url" placeholder="Enter image URL" required />
@@ -414,7 +416,6 @@
                 </p>
             </div>
         </section>
-
         <!-- FOOTER -->
         <footer class="bg-gray-900 text-white py-8 rounded-b-3xl px-4 animate-fadeIn">
             <div class="container mx-auto text-center">

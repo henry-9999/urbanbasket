@@ -87,10 +87,11 @@ def single_blog(request,pk):
 def add_blog(request):
     if request.method == "POST":
         if User.is_authenticated:
-            image_url = request['image_url']
-            title = request['title']
-            text = request['text']
-            Blog.objects.create(image=image_url,title=title,text=text)
+            image_url = request.POST['image_url']
+            header = request.POST['title']
+            text = request.POST['text']
+            Blog.objects.create(image=image_url,header=header,text=text)
+            return redirect('blog')
     return render(request,'addBlog.html')
 
 
