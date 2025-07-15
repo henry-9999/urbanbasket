@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib import auth
 from .models import Blog
+from .models import Latest_produce
 from datetime import datetime
 # Create your views here.
 
@@ -41,7 +42,8 @@ def signup(request):
 
 
 def product(request):
-    return render(request,'product.html')
+    latest = Latest_produce.objects.all()
+    return render(request,'product.html',{'latest':latest})
 
 
 def logout(request):

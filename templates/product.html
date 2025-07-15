@@ -646,7 +646,7 @@
             <div class="container mx-auto">
                 <!-- Main Promotional Banner -->
                 <div class="hero-main-banner animate-fadeIn"
-                    style="background-image: url('https://placehold.co/1200x350/4CAF50/FFFFFF?text=Fresh+Produce+Deals'); animation-delay: 0.3s;">
+                    style="background-image: url('https://media.istockphoto.com/id/589415708/photo/fresh-fruits-and-vegetables.jpg?s=612x612&w=0&k=20&c=aBFGUU-98pnoht73co8r2TZIKF3MDtBBu9KSxtxK_C0='); animation-delay: 0.3s;">
                     <div class="hero-main-banner-content">
                         <h1>Unlock Fresh Deals!</h1>
                         <p>Save big on your favorite organic fruits and vegetables this week.</p>
@@ -658,27 +658,33 @@
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 animate-fadeIn"
                     style="animation-delay: 0.5s;">
                     <div class="feature-card">
-                        <img src="https://placehold.co/100x100/F0FDF4/4CAF50?text=Seasonal" alt="Seasonal Produce">
+                        <img src="https://media.istockphoto.com/id/1310751628/photo/closeup-of-woman-hands-holding-freshly-picked-strawberries-in-garden-copy-space-handful-of.jpg?s=612x612&w=0&k=20&c=QsnJ4Xfz8-EGG68wFaTZIhnSwJ51S4rUfJQSLRvT9Rs="
+                            alt="Seasonal Produce">
                         <h3>Seasonal Picks</h3>
                     </div>
                     <div class="feature-card">
-                        <img src="https://placehold.co/100x100/F0FDF4/4CAF50?text=Vegetables" alt="Fresh Vegetables">
+                        <img src="https://media.istockphoto.com/id/1222581489/photo/farmer-woman-holding-wooden-box-full-of-fresh-raw-vegetables.jpg?s=612x612&w=0&k=20&c=oqL1nl4fxvYrDCG93r0PXEe2NnARXwPT7RqXFIRSPh8="
+                            alt="Fresh Vegetables">
                         <h3>Vegetables</h3>
                     </div>
                     <div class="feature-card">
-                        <img src="https://placehold.co/100x100/F0FDF4/4CAF50?text=Fruits" alt="Delicious Fruits">
+                        <img src="https://media.istockphoto.com/id/1273378551/photo/set-of-summer-fruits-and-berries-in-wooden-serving.jpg?s=612x612&w=0&k=20&c=XtJFQDgpV_AsG3aFzo3FVN2pmbey7h0jWHMzlHWJ5Kk="
+                            alt="Delicious Fruits">
                         <h3>Fruits</h3>
                     </div>
                     <div class="feature-card">
-                        <img src="https://placehold.co/100x100/F0FDF4/4CAF50?text=Herbs" alt="Aromatic Herbs">
+                        <img src="https://media.istockphoto.com/id/598931180/photo/basil-sage-dill-and-thyme-herbs.jpg?s=612x612&w=0&k=20&c=YsWP1t7c3y8IEO9AZ4qIGdkqeufaYSGW7_wVjLZWLl4="
+                            alt="Aromatic Herbs">
                         <h3>Herbs</h3>
                     </div>
                     <div class="feature-card">
-                        <img src="https://placehold.co/100x100/F0FDF4/4CAF50?text=Tubers" alt="Healthy Tubers">
+                        <img src="https://media.istockphoto.com/id/1091697242/photo/bio-food-garden-produce-and-harvested-vegetable-fresh-farm-vegetables-in-wooden-box.jpg?s=612x612&w=0&k=20&c=wInfs_swOglu1mW_xec0UThyvC0q7NTc3WBB1KhHeEw="
+                            alt="Healthy Tubers">
                         <h3>Tubers</h3>
                     </div>
                     <div class="feature-card">
-                        <img src="https://placehold.co/100x100/F0FDF4/4CAF50?text=Organic" alt="Organic Certified">
+                        <img src="https://media.istockphoto.com/id/2160078318/photo/close-up-of-a-farmer-planting-a-lettuce-seedling-on-a-community-garden.jpg?s=612x612&w=0&k=20&c=tFN1tsq_7ZrY6EyK_zp7Fkt5skPmVaFZGraUt1wDHs4="
+                            alt="Organic Certified">
                         <h3>Organic Certified</h3>
                     </div>
                 </div>
@@ -694,94 +700,34 @@
                 <div class="overflow-products-container">
                     <div id="latest-products-overflow" class="overflow-products-wrapper">
                         <!-- Product 1 -->
+                        {% for product in latest %}
                         <div class="product-card">
-                            <span class="category-badge">Vegetable</span>
-                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Organic+Tomatoes"
-                                alt="Organic Tomatoes">
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Organic Tomatoes</h3>
-                            <p class="text-gray-600 mb-3">Freshly picked, juicy, and ripe.</p>
-                            <p class="text-lg font-bold text-primary-green mb-4">₦1,200 / kg</p>
+                            {% if product.discount %}
+                            <span class="discount-badge">-{{product.discount_percent}}% OFF</span>
+                            {% endif %}
+                            <span class="category-badge">{{product.category}}</span>
+                            <img src="{{product.img}}" alt="Organic Tomatoes">
+                            <h3 class="text-xl font-semibold text-gray-900 mb-2">{{product.product_name}}</h3>
+                            <p class="text-gray-600 mb-3">{{product.product_description}}</p>
+                            {% if product.discount %}
+
+                            <p class="text-lg font-bold text-primary-green mb-4">{{product.get_discount_price}} <s
+                                    class="text-gray-400">₦{{product.price}}</s>
+                                / {{product.per}}</p>
+
+                            {% else %}
+                            <p class="text-lg font-bold text-primary-green mb-4">₦{{product.price}} / {{product.per}}
+                            </p>
+                            {% endif %}
+
                             <button class="add-to-box-button">Add to Box</button>
                             <button class="view-details-button">View Details</button>
                         </div>
-                        <!-- Product 2 -->
-                        <div class="product-card">
-                            <span class="discount-badge">-20% OFF</span>
-                            <span class="category-badge">Vegetable</span>
-                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Cucumber+Deal"
-                                alt="Cucumber Deal">
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Crisp Cucumbers</h3>
-                            <p class="text-gray-600 mb-3">Perfect for salads and snacks.</p>
-                            <p class="text-lg font-bold text-primary-green mb-4">₦700 <s class="text-gray-400">₦875</s>
-                                / kg</p>
-                            <button class="add-to-box-button">Add to Box</button>
-                            <button class="view-details-button">View Details</button>
-                        </div>
-                        <!-- Product 3 -->
-                        <div class="product-card">
-                            <span class="category-badge">Fruit</span>
-                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Ripe+Mangoes" alt="Ripe Mangoes">
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Sweet Mangoes</h3>
-                            <p class="text-gray-600 mb-3">Now in season, bursting with flavor.</p>
-                            <p class="text-lg font-bold text-primary-green mb-4">₦1,800 / kg</p>
-                            <button class="add-to-box-button">Add to Box</button>
-                            <button class="view-details-button">View Details</button>
-                        </div>
-                        <!-- Product 4 -->
-                        <div class="product-card">
-                            <span class="category-badge">Fruit</span>
-                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Fresh+Oranges"
-                                alt="Fresh Oranges">
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Fresh Oranges</h3>
-                            <p class="text-gray-600 mb-3">Citrusy and full of Vitamin C.</p>
-                            <p class="text-lg font-bold text-primary-green mb-4">₦950 / kg</p>
-                            <button class="add-to-box-button">Add to Box</button>
-                            <button class="view-details-button">View Details</button>
-                        </div>
-                        <!-- Product 5 -->
-                        <div class="product-card">
-                            <span class="category-badge">Herb</span>
-                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Organic+Basil"
-                                alt="Organic Basil">
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Organic Basil</h3>
-                            <p class="text-gray-600 mb-3">Aromatic and perfect for cooking.</p>
-                            <p class="text-lg font-bold text-primary-green mb-4">₦400 / bunch</p>
-                            <button class="add-to-box-button">Add to Box</button>
-                            <button class="view-details-button">View Details</button>
-                        </div>
-                        <!-- Product 6 -->
-                        <div class="product-card">
-                            <span class="category-badge">Vegetable</span>
-                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Lettuce" alt="Lettuce">
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Crisp Lettuce</h3>
-                            <p class="text-gray-600 mb-3">Ideal for fresh salads and sandwiches.</p>
-                            <p class="text-lg font-bold text-primary-green mb-4">₦600 / head</p>
-                            <button class="add-to-box-button">Add to Box</button>
-                            <button class="view-details-button">View Details</button>
-                        </div>
-                        <!-- Product 7 -->
-                        <div class="product-card">
-                            <span class="category-badge">Fruit</span>
-                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Watermelon" alt="Watermelon">
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Sweet Watermelon</h3>
-                            <p class="text-gray-600 mb-3">Refreshing and hydrating.</p>
-                            <p class="text-lg font-bold text-primary-green mb-4">₦3,500 / piece</p>
-                            <button class="add-to-box-button">Add to Box</button>
-                            <button class="view-details-button">View Details</button>
-                        </div>
-                        <!-- Product 8 -->
-                        <div class="product-card">
-                            <span class="category-badge">Tuber</span>
-                            <img src="https://placehold.co/300x180/F0FDF4/4CAF50?text=Puna+Yam" alt="Puna Yam">
-                            <h3 class="text-xl font-semibold text-gray-900 mb-2">Puna Yam</h3>
-                            <p class="text-gray-600 mb-3">Locally sourced, perfect for pounding.</p>
-                            <p class="text-lg font-bold text-primary-green mb-4">₦2,500 / kg</p>
-                            <button class="add-to-box-button">Add to Box</button>
-                            <button class="view-details-button">View Details</button>
-                        </div>
+                        {% endfor %}
+
+
                     </div>
                 </div>
-            </div>
         </section>
 
         <!-- Filter/Search Section -->
